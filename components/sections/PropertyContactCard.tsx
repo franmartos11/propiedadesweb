@@ -18,7 +18,7 @@ export function PropertyContactCard({ propertyName, propertySlug, propertyId, pr
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [origin, setOrigin] = useState('');
-  const { trackInquiry } = useAnalytics();
+  const { trackWhatsAppClick } = useAnalytics();
   const settings = useSettings();
   
   const [formData, setFormData] = useState({
@@ -157,7 +157,7 @@ export function PropertyContactCard({ propertyName, propertySlug, propertyId, pr
           target="_blank"
           rel="noopener noreferrer"
           onClick={() => {
-            trackInquiry('property_page', propertySlug);
+            trackWhatsAppClick('property_page', propertySlug);
             handleLocalTrackInquiry();
           }}
           className="w-full flex items-center justify-center gap-2.5 bg-[#25D366] hover:bg-[#1fba58] transition-colors text-white py-3.5 text-sm font-semibold cursor-pointer rounded-lg shadow-sm"
