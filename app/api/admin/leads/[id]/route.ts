@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { updateLead } from '@/lib/data/db';
 import { decrypt } from '@/lib/auth/session';
 import { cookies } from 'next/headers';
-import type { LeadStatus } from '@/lib/data/db';
+import type { LeadStatus, Lead } from '@/lib/data/db';
 
 // PATCH /api/admin/leads/[id] — cambiar estado del lead
 export async function PATCH(
