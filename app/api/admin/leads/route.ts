@@ -12,6 +12,6 @@ export async function GET() {
     return NextResponse.json({ error: 'No autorizado' }, { status: 401 });
   }
 
-  const leads = getLeads();
+  const leads = await getLeads();
   return NextResponse.json({ leads });
 }

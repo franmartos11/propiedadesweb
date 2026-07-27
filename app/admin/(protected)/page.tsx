@@ -41,8 +41,8 @@ function KpiCard({
 export default async function AdminDashboard() {
   await requireAuth();
 
-  const properties = getProperties();
-  const leads = getLeads();
+  const properties = await getProperties();
+  const leads = await getLeads();
 
   const totalProps = properties.length;
   const enVenta = properties.filter((p) => p.tipo === 'Venta').length;

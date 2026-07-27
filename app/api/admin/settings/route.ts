@@ -13,7 +13,7 @@ export async function PUT(req: NextRequest) {
 
   try {
     const data = await req.json();
-    const updated = updateSettings(data);
+    const updated = await updateSettings(data);
     return NextResponse.json({ ok: true, settings: updated });
   } catch (err) {
     console.error('[PUT /api/admin/settings]', err);

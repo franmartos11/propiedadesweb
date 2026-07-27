@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Faltan campos obligatorios' }, { status: 400 });
     }
 
-    const lead = saveLead({ nombre, telefono, email, servicio, mensaje });
+    const lead = await saveLead({ nombre, telefono, email, servicio, mensaje });
     return NextResponse.json({ ok: true, lead }, { status: 201 });
   } catch (err) {
     console.error('[POST /api/leads]', err);

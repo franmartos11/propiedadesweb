@@ -5,7 +5,8 @@ import { Ruler, Bed, Bath, Car, Printer } from 'lucide-react';
 
 export default async function FichaPropiedadPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const property = getProperties().find(p => p.slug === slug);
+  const properties = await getProperties();
+  const property = properties.find(p => p.slug === slug);
 
   if (!property) {
     notFound();

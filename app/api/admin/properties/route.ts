@@ -4,7 +4,7 @@ import { decrypt } from '@/lib/auth/session';
 import { cookies } from 'next/headers';
 
 export async function GET() {
-  const props = getProperties();
+  const props = await getProperties();
   return NextResponse.json({ properties: props });
 }
 

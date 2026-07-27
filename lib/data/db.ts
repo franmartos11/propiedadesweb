@@ -1,9 +1,7 @@
 import 'server-only';
-import path from 'path';
-import fs from 'fs';
+import { createServerSupabaseClient } from '@/lib/supabase/server';
 import type { Property } from '@/lib/data/properties';
-
-// ─── Tipos ────────────────────────────────────────────────────────────────────
+import { properties as staticProperties } from '@/lib/data/properties';
 
 export type LeadStatus = 'Nuevo' | 'Contactado' | 'En seguimiento' | 'Cerrado';
 
@@ -21,71 +19,80 @@ export interface Lead {
 
 export type { Property };
 
-// ─── Rutas de archivos ────────────────────────────────────────────────────────
-
-const DATA_DIR = path.join(process.cwd(), 'data');
-const LEADS_FILE = path.join(DATA_DIR, 'leads.json');
-const PROPERTIES_FILE = path.join(DATA_DIR, 'properties.json');
-
-function ensureFile(filePath: string, defaultContent: string) {
-  if (!fs.existsSync(filePath)) {
-    fs.mkdirSync(DATA_DIR, { recursive: true });
-    fs.writeFileSync(filePath, defaultContent, 'utf-8');
-  }
-}
-
 // ─── Leads ────────────────────────────────────────────────────────────────────
 
-export function getLeads(): Lead[] {
-  ensureFile(LEADS_FILE, '[]');
-  return JSON.parse(fs.readFileSync(LEADS_FILE, 'utf-8')) as Lead[];
+export async function getLeads(): Promise<Lead[]> {
+  const supabase = createServerSupabaseClient();
+  const { data, error } = await supabase
+    .from('leads')
+    .select('*')
+    .order('creadoEn', { ascending: false });
+
+  if (error) {
+    console.error('Error fetching leads:', error);
+    return [];
+  }
+  return data as Lead[];
 }
 
-export function saveLead(lead: Omit<Lead, 'id' | 'estado' | 'creadoEn'>): Lead {
-  const leads = getLeads();
+export async function saveLead(lead: Omit<Lead, 'id' | 'estado' | 'creadoEn'>): Promise<Lead> {
+  const supabase = createServerSupabaseClient();
   const newLead: Lead = {
     ...lead,
     id: crypto.randomUUID(),
     estado: 'Nuevo',
     creadoEn: new Date().toISOString(),
   };
-  leads.unshift(newLead);
-  fs.writeFileSync(LEADS_FILE, JSON.stringify(leads, null, 2), 'utf-8');
+
+  const { error } = await supabase.from('leads').insert([newLead]);
+  if (error) {
+    console.error('Error inserting lead:', error);
+    throw new Error('No se pudo guardar el lead en la base de datos');
+  }
+
   return newLead;
 }
 
-export function updateLead(id: string, updates: Partial<Lead>): Lead | null {
-  const leads = getLeads();
-  const idx = leads.findIndex((l) => l.id === id);
-  if (idx === -1) return null;
-  leads[idx] = { ...leads[idx], ...updates };
-  fs.writeFileSync(LEADS_FILE, JSON.stringify(leads, null, 2), 'utf-8');
-  return leads[idx];
+export async function updateLead(id: string, updates: Partial<Lead>): Promise<Lead | null> {
+  const supabase = createServerSupabaseClient();
+  const { data, error } = await supabase
+    .from('leads')
+    .update(updates)
+    .eq('id', id)
+    .select()
+    .single();
+
+  if (error || !data) {
+    console.error('Error updating lead:', error);
+    return null;
+  }
+  return data as Lead;
 }
 
 // ─── Properties ───────────────────────────────────────────────────────────────
 
-import { properties as staticProperties } from '@/lib/data/properties';
-const staticPropertiesLoader = () => staticProperties as Property[];
+export async function getProperties(): Promise<Property[]> {
+  const supabase = createServerSupabaseClient();
+  const { data, error } = await supabase
+    .from('properties')
+    .select('*')
+    .order('updatedAt', { ascending: false });
 
-export function getProperties(): Property[] {
-  if (!fs.existsSync(PROPERTIES_FILE)) {
-    return staticPropertiesLoader();
+  if (error) {
+    console.error('Error fetching properties from Supabase, falling back to static:', error);
+    return staticProperties as Property[]; // Fallback for local testing if table is empty
   }
-  return JSON.parse(fs.readFileSync(PROPERTIES_FILE, 'utf-8')) as Property[];
+
+  // If table is empty, we return static as fallback during the migration phase
+  if (!data || data.length === 0) {
+    return staticProperties as Property[];
+  }
+
+  return data as Property[];
 }
 
-export function seedPropertiesIfNeeded(): void {
-  if (!fs.existsSync(PROPERTIES_FILE)) {
-    const props = staticPropertiesLoader();
-    fs.mkdirSync(DATA_DIR, { recursive: true });
-    fs.writeFileSync(PROPERTIES_FILE, JSON.stringify(props, null, 2), 'utf-8');
-  }
-}
-
-export function createProperty(data: Omit<Property, 'id' | 'slug' | 'updatedAt'>): Property {
-  seedPropertiesIfNeeded();
-  const props = getProperties();
+export async function createProperty(data: Omit<Property, 'id' | 'slug' | 'updatedAt'>): Promise<Property> {
+  const supabase = createServerSupabaseClient();
   const id = `p${Date.now()}`;
   const slug = `propiedad-${id}`;
   const newProp: Property = {
@@ -94,30 +101,57 @@ export function createProperty(data: Omit<Property, 'id' | 'slug' | 'updatedAt'>
     slug,
     updatedAt: new Date().toISOString(),
   };
-  props.unshift(newProp);
-  fs.writeFileSync(PROPERTIES_FILE, JSON.stringify(props, null, 2), 'utf-8');
+
+  const { error } = await supabase.from('properties').insert([newProp]);
+  if (error) {
+    console.error('Error creating property:', error);
+    throw new Error('No se pudo crear la propiedad');
+  }
+
   return newProp;
 }
 
-export function updateProperty(id: string, data: Partial<Property>): Property | null {
-  seedPropertiesIfNeeded();
-  const props = getProperties();
-  const idx = props.findIndex((p) => p.id === id);
-  if (idx === -1) return null;
-  props[idx] = { ...props[idx], ...data, updatedAt: new Date().toISOString() };
-  fs.writeFileSync(PROPERTIES_FILE, JSON.stringify(props, null, 2), 'utf-8');
-  return props[idx];
+export async function updateProperty(id: string, data: Partial<Property>): Promise<Property | null> {
+  const supabase = createServerSupabaseClient();
+  const { data: updated, error } = await supabase
+    .from('properties')
+    .update({ ...data, updatedAt: new Date().toISOString() })
+    .eq('id', id)
+    .select()
+    .single();
+
+  if (error || !updated) {
+    console.error('Error updating property:', error);
+    return null;
+  }
+  return updated as Property;
 }
 
-export function deleteProperty(id: string): boolean {
-  seedPropertiesIfNeeded();
-  const props = getProperties();
-  const filtered = props.filter((p) => p.id !== id);
-  if (filtered.length === props.length) return false;
-  fs.writeFileSync(PROPERTIES_FILE, JSON.stringify(filtered, null, 2), 'utf-8');
+export async function deleteProperty(id: string): Promise<boolean> {
+  const supabase = createServerSupabaseClient();
+  const { error } = await supabase
+    .from('properties')
+    .delete()
+    .eq('id', id);
+
+  if (error) {
+    console.error('Error deleting property:', error);
+    return false;
+  }
   return true;
 }
 
-export function getPropertyById(id: string): Property | null {
-  return getProperties().find((p) => p.id === id) ?? null;
+export async function getPropertyById(id: string): Promise<Property | null> {
+  const supabase = createServerSupabaseClient();
+  const { data, error } = await supabase
+    .from('properties')
+    .select('*')
+    .eq('id', id)
+    .single();
+
+  if (error || !data) {
+    // Fallback to static just in case
+    return (staticProperties as Property[]).find((p) => p.id === id) ?? null;
+  }
+  return data as Property;
 }

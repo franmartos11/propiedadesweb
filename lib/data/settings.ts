@@ -1,6 +1,5 @@
 import 'server-only';
-import path from 'path';
-import fs from 'fs';
+import { createServerSupabaseClient } from '@/lib/supabase/server';
 
 export interface GlobalSettings {
   whatsapp: string;
@@ -16,28 +15,33 @@ const DEFAULT_SETTINGS: GlobalSettings = {
   address: 'Córdoba, Argentina'
 };
 
-const DATA_DIR = path.join(process.cwd(), 'data');
-const SETTINGS_FILE = path.join(DATA_DIR, 'settings.json');
+export async function getSettings(): Promise<GlobalSettings> {
+  const supabase = createServerSupabaseClient();
+  const { data, error } = await supabase
+    .from('settings')
+    .select('whatsapp, email, instagram, address')
+    .eq('id', 'global')
+    .single();
 
-function ensureFile() {
-  if (!fs.existsSync(SETTINGS_FILE)) {
-    fs.mkdirSync(DATA_DIR, { recursive: true });
-    fs.writeFileSync(SETTINGS_FILE, JSON.stringify(DEFAULT_SETTINGS, null, 2), 'utf-8');
-  }
-}
-
-export function getSettings(): GlobalSettings {
-  ensureFile();
-  try {
-    return JSON.parse(fs.readFileSync(SETTINGS_FILE, 'utf-8')) as GlobalSettings;
-  } catch {
+  if (error || !data) {
     return DEFAULT_SETTINGS;
   }
+  return data as GlobalSettings;
 }
 
-export function updateSettings(updates: Partial<GlobalSettings>): GlobalSettings {
-  const current = getSettings();
+export async function updateSettings(updates: Partial<GlobalSettings>): Promise<GlobalSettings> {
+  const supabase = createServerSupabaseClient();
+  const current = await getSettings();
   const next = { ...current, ...updates };
-  fs.writeFileSync(SETTINGS_FILE, JSON.stringify(next, null, 2), 'utf-8');
+
+  const { error } = await supabase
+    .from('settings')
+    .upsert({ id: 'global', ...next });
+
+  if (error) {
+    console.error('Error updating settings in Supabase:', error);
+    throw new Error('Could not update settings');
+  }
+
   return next;
 }

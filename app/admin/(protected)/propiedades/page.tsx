@@ -9,7 +9,7 @@ export const dynamic = 'force-dynamic';
 export default async function AdminPropertiesPage() {
   await requireAuth();
 
-  const properties = getProperties();
+  const properties = await getProperties();
 
   const enVenta = properties.filter((p) => p.tipo === 'Venta').length;
   const enAlquiler = properties.filter((p) => p.tipo === 'Arriendo').length;

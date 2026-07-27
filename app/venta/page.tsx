@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { SearchLayout } from '@/components/sections/SearchLayout';
-import { properties } from '@/lib/data/properties';
+import { getProperties } from '@/lib/data/db';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -10,7 +10,8 @@ export const metadata: Metadata = {
   description: 'Catálogo de propiedades exclusivas en venta en Córdoba y alrededores.',
 };
 
-export default function VentaPage() {
+export default async function VentaPage() {
+  const properties = await getProperties();
   const ventaProperties = properties.filter(p => p.tipo === 'Venta');
 
   return (

@@ -1,6 +1,5 @@
 import 'server-only';
-import path from 'path';
-import fs from 'fs';
+import { createServerSupabaseClient } from '@/lib/supabase/server';
 
 export type AnalyticsEventType = 'property_view' | 'property_inquiry';
 
@@ -12,29 +11,36 @@ export interface AnalyticsEvent {
   timestamp: string;
 }
 
-const DATA_DIR = path.join(process.cwd(), 'data');
-const ANALYTICS_FILE = path.join(DATA_DIR, 'analytics.json');
+export async function getAnalyticsEvents(): Promise<AnalyticsEvent[]> {
+  const supabase = createServerSupabaseClient();
+  const { data, error } = await supabase
+    .from('analytics')
+    .select('*')
+    .order('timestamp', { ascending: false });
 
-function ensureFile() {
-  if (!fs.existsSync(ANALYTICS_FILE)) {
-    fs.mkdirSync(DATA_DIR, { recursive: true });
-    fs.writeFileSync(ANALYTICS_FILE, '[]', 'utf-8');
+  if (error || !data) {
+    console.error('Error fetching analytics from Supabase:', error);
+    return [];
   }
+  return data as AnalyticsEvent[];
 }
 
-export function getAnalyticsEvents(): AnalyticsEvent[] {
-  ensureFile();
-  return JSON.parse(fs.readFileSync(ANALYTICS_FILE, 'utf-8')) as AnalyticsEvent[];
-}
-
-export function trackEvent(data: Omit<AnalyticsEvent, 'id' | 'timestamp'>): AnalyticsEvent {
-  const events = getAnalyticsEvents();
+export async function trackEvent(data: Omit<AnalyticsEvent, 'id' | 'timestamp'>): Promise<AnalyticsEvent> {
+  const supabase = createServerSupabaseClient();
   const newEvent: AnalyticsEvent = {
     ...data,
     id: crypto.randomUUID(),
     timestamp: new Date().toISOString(),
   };
-  events.push(newEvent);
-  fs.writeFileSync(ANALYTICS_FILE, JSON.stringify(events, null, 2), 'utf-8');
+
+  const { error } = await supabase
+    .from('analytics')
+    .insert([newEvent]);
+
+  if (error) {
+    console.error('Error inserting analytics to Supabase:', error);
+    // Don't throw to avoid crashing the user flow, just log it.
+  }
+  
   return newEvent;
 }

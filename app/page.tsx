@@ -8,9 +8,10 @@ import { ServicesSection } from '@/components/sections/ServicesSection';
 import { AdminServicesSection } from '@/components/sections/AdminServicesSection';
 import { ContactCTA } from '@/components/sections/ContactCTA';
 import { InstagramSection } from '@/components/sections/InstagramSection';
-import { properties } from '@/lib/data/properties';
+import { getProperties } from '@/lib/data/db';
 
-export default function Home() {
+export default async function Home() {
+  const properties = await getProperties();
   return (
     <>
       <Navbar />

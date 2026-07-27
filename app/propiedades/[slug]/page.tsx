@@ -20,14 +20,14 @@ interface Props {
 }
 
 export async function generateStaticParams() {
-  const properties = getProperties();
+  const properties = await getProperties();
   return properties.map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const resolvedParams = await params;
-  const properties = getProperties();
-  const property = properties.find(p => p.slug === resolvedParams.slug);
+  const { slug } = await params;
+  const properties = await getProperties();
+  const property = properties.find(p => p.slug === slug);
   if (!property) return { title: 'Propiedad no encontrada' };
   return {
     title: `${property.nombre} en ${property.barrio} | Villalba Martinez`,
@@ -43,7 +43,7 @@ export default async function PropertyPage({ params, searchParams }: Props) {
   const resolvedSearch = await searchParams;
   const from = resolvedSearch?.from;
 
-  const properties = getProperties();
+  const properties = await getProperties();
   const property = properties.find(p => p.slug === resolvedParams.slug);
   if (!property) notFound();
 

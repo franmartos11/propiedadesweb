@@ -3,8 +3,8 @@ import Image from 'next/image';
 import { MapPin, Mail, Phone } from 'lucide-react';
 import { getSettings } from '@/lib/data/settings';
 
-export function Footer() {
-  const settings = getSettings();
+export async function Footer() {
+  const settings = await getSettings();
 
   return (
     <footer className="bg-white border-t border-border">

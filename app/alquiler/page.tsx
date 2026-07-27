@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { SearchLayout } from '@/components/sections/SearchLayout';
-import { properties } from '@/lib/data/properties';
+import { getProperties } from '@/lib/data/db';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -10,7 +10,8 @@ export const metadata: Metadata = {
   description: 'Propiedades en alquiler en Córdoba. Residencial y comercial.',
 };
 
-export default function AlquilerPage() {
+export default async function AlquilerPage() {
+  const properties = await getProperties();
   const alquilerProperties = properties.filter(p => p.tipo === 'Arriendo');
 
   return (

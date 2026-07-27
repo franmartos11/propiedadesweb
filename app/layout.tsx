@@ -28,12 +28,12 @@ export const metadata: Metadata = {
   description: 'Inmobiliaria de confianza en Córdoba. Venta, alquiler y administración de inmuebles con más de 15 años de experiencia.',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const settings = getSettings();
+  const settings = await getSettings();
 
   return (
     <html lang="es" className={`${dmSans.variable} ${cormorant.variable} h-full antialiased`}>

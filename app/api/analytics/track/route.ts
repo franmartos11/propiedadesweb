@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Faltan campos requeridos' }, { status: 400 });
     }
 
-    const event = trackEvent({ type, propertyId, propertyType });
+    const event = await trackEvent({ type, propertyId, propertyType });
     return NextResponse.json({ ok: true, event });
   } catch (err) {
     console.error('[POST /api/analytics/track]', err);

@@ -24,7 +24,7 @@ export async function PATCH(
   if (estado !== undefined) updates.estado = estado;
   if (notas !== undefined) updates.notas = notas;
 
-  const updated = updateLead(id, updates);
+  const updated = await updateLead(id, updates);
   if (!updated) {
     return NextResponse.json({ error: 'Lead no encontrado' }, { status: 404 });
   }

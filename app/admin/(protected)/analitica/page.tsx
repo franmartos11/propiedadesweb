@@ -8,8 +8,8 @@ export const dynamic = 'force-dynamic';
 export default async function AnalyticsPage() {
   await requireAuth();
 
-  const properties = getProperties();
-  const events = getAnalyticsEvents();
+  const properties = await getProperties();
+  const events = await getAnalyticsEvents();
 
   return (
     <div className="p-8">

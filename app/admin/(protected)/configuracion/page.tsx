@@ -6,7 +6,7 @@ export const dynamic = 'force-dynamic';
 
 export default async function SettingsPage() {
   await requireAuth();
-  const settings = getSettings();
+  const settings = await getSettings();
 
   return (
     <div className="p-8">

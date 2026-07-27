@@ -7,7 +7,7 @@ export default async function EditPropertyPage({ params }: { params: Promise<{ i
   await requireAuth();
 
   const { id } = await params;
-  const property = getPropertyById(id);
+  const property = await getPropertyById(id);
 
   if (!property) {
     notFound();

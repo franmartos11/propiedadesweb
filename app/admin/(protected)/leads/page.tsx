@@ -7,7 +7,7 @@ export const dynamic = 'force-dynamic';
 export default async function AdminLeadsPage() {
   await requireAuth();
   
-  const leads = getLeads();
+  const leads = await getLeads();
 
   return (
     <div className="p-8">

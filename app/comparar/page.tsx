@@ -9,8 +9,8 @@ export const metadata: Metadata = {
   description: 'Compara lado a lado las propiedades de tu interés.',
 };
 
-export default function ComparePage() {
-  const properties = getProperties();
+export default async function CompararPage() {
+  const properties = await getProperties();
 
   return (
     <>
