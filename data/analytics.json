@@ -1,0 +1,51 @@
+[
+  {
+    "type": "property_view",
+    "propertyId": "p897-i625",
+    "propertyType": "Venta",
+    "id": "7204acc8-6336-4f4a-a683-f2ba75523592",
+    "timestamp": "2026-07-27T20:04:04.747Z"
+  },
+  {
+    "type": "property_view",
+    "propertyId": "p893-i625",
+    "propertyType": "Venta",
+    "id": "f47077ed-9c38-4a37-b380-dd5cbea0d50b",
+    "timestamp": "2026-07-27T20:04:08.400Z"
+  },
+  {
+    "type": "property_view",
+    "propertyId": "p746-i625",
+    "propertyType": "Arriendo",
+    "id": "258ffeac-c21e-49f5-8c4e-75de334e62a8",
+    "timestamp": "2026-07-27T20:04:14.154Z"
+  },
+  {
+    "type": "property_view",
+    "propertyId": "p895-i625",
+    "propertyType": "Arriendo",
+    "id": "98b35e99-2da7-4825-990d-18e3fb5053df",
+    "timestamp": "2026-07-27T20:04:17.090Z"
+  },
+  {
+    "type": "property_view",
+    "propertyId": "p895-i625",
+    "propertyType": "Arriendo",
+    "id": "1ef08d0e-6177-4381-902f-8c0df3943599",
+    "timestamp": "2026-07-27T20:18:18.087Z"
+  },
+  {
+    "type": "property_view",
+    "propertyId": "p895-i625",
+    "propertyType": "Arriendo",
+    "id": "e3f4b2b3-8fbe-4518-8f81-7594af2c8e06",
+    "timestamp": "2026-07-27T20:18:55.104Z"
+  },
+  {
+    "type": "property_view",
+    "propertyId": "p893-i625",
+    "propertyType": "Venta",
+    "id": "9461bf45-04db-4ef9-99bd-1f71f8314204",
+    "timestamp": "2026-07-27T20:23:32.398Z"
+  }
+]
