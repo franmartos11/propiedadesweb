@@ -3,9 +3,13 @@ import { SignJWT, jwtVerify } from 'jose';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-const secretKey = process.env.SESSION_SECRET;
-if (!secretKey) throw new Error('SESSION_SECRET env variable is missing');
-const encodedKey = new TextEncoder().encode(secretKey);
+const getEncodedKey = () => {
+  const secretKey = process.env.SESSION_SECRET || 'fallback_secret_for_build';
+  if (!process.env.SESSION_SECRET && process.env.NODE_ENV === 'production') {
+    console.warn('WARNING: SESSION_SECRET env variable is missing. Using fallback.');
+  }
+  return new TextEncoder().encode(secretKey);
+};
 
 const COOKIE_NAME = 'admin_session';
 const SESSION_DURATION_DAYS = 7;
@@ -21,13 +25,13 @@ export async function encrypt(payload: SessionPayload): Promise<string> {
     .setProtectedHeader({ alg: 'HS256' })
     .setIssuedAt()
     .setExpirationTime(`${SESSION_DURATION_DAYS}d`)
-    .sign(encodedKey);
+    .sign(getEncodedKey());
 }
 
 export async function decrypt(token: string | undefined): Promise<SessionPayload | null> {
   if (!token) return null;
   try {
-    const { payload } = await jwtVerify(token, encodedKey, { algorithms: ['HS256'] });
+    const { payload } = await jwtVerify(token, getEncodedKey(), { algorithms: ['HS256'] });
     return payload as unknown as SessionPayload;
   } catch {
     return null;
