@@ -80,7 +80,7 @@ export function PropertyContactCard({ propertyName, propertySlug, propertyId, pr
         }),
       });
       
-      trackInquiry();
+      handleLocalTrackInquiry();
       setSent(true);
       setFormData({ nombre: '', email: '', telefono: '', mensaje: '' });
       setTimeout(() => setSent(false), 4000);
