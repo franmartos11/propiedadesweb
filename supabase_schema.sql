@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS public.properties (
     habitaciones INTEGER NOT NULL,
     banos INTEGER NOT NULL,
     estacionamientos INTEGER NOT NULL,
+    antiguedad INTEGER,
     lat NUMERIC NOT NULL,
     lng NUMERIC NOT NULL,
     descripcion TEXT NOT NULL,

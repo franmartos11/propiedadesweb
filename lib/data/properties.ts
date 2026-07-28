@@ -14,6 +14,7 @@ export interface Property {
   habitaciones: number;
   banos: number;
   estacionamientos: number;
+  antiguedad?: number;
   lat: number;
   lng: number;
   descripcion: string;

@@ -27,6 +27,7 @@ export function PropertyForm({ initialData, isEdit }: PropertyFormProps) {
     habitaciones: initialData?.habitaciones ?? 0,
     banos: initialData?.banos ?? 0,
     estacionamientos: initialData?.estacionamientos ?? 0,
+    antiguedad: initialData?.antiguedad ?? 0,
     descripcion: initialData?.descripcion ?? '',
     imagenes: initialData?.imagenes.join('\n') ?? '', // textArea por líneas
     tour360Urls: initialData?.tour360Urls?.join('\n') ?? '',
@@ -42,7 +43,7 @@ export function PropertyForm({ initialData, isEdit }: PropertyFormProps) {
       return;
     }
 
-    const numberFields = ['precio', 'm2Util', 'm2Total', 'habitaciones', 'banos', 'estacionamientos'];
+    const numberFields = ['precio', 'm2Util', 'm2Total', 'habitaciones', 'banos', 'estacionamientos', 'antiguedad'];
     const finalValue = numberFields.includes(name) ? Number(value) : value;
 
     setFormData(prev => ({ ...prev, [name]: finalValue }));
@@ -203,6 +204,11 @@ export function PropertyForm({ initialData, isEdit }: PropertyFormProps) {
           <div>
             <label className={labelClasses}>Cocheras</label>
             <input type="number" name="estacionamientos" value={formData.estacionamientos} onChange={handleChange} required className={inputClasses} />
+          </div>
+          <div>
+            <label className={labelClasses}>Antigüedad (años)</label>
+            <input type="number" name="antiguedad" value={formData.antiguedad} onChange={handleChange} required className={inputClasses} />
+            <p className="text-xs text-muted-foreground mt-1">0 = A estrenar / En construcción</p>
           </div>
         </div>
 

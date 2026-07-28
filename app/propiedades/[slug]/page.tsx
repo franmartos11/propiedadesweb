@@ -12,7 +12,7 @@ import { PropertyContactCard } from '@/components/sections/PropertyContactCard';
 import { RelatedProperties } from '@/components/sections/RelatedProperties';
 import { PropertyViewTracker } from '@/components/analytics/PropertyViewTracker';
 import { CompareButton } from '@/components/ui/CompareButton';
-import { MapPin, Maximize2, Bed, Bath, Car } from 'lucide-react';
+import { MapPin, Maximize2, Bed, Bath, Car, CalendarDays } from 'lucide-react';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -142,6 +142,17 @@ export default async function PropertyPage({ params, searchParams }: Props) {
                     <div>
                       <span className="block font-sans text-xl font-semibold text-foreground">{property.banos}</span>
                       <span className="block font-sans text-sm text-gray">Baños</span>
+                    </div>
+                  </div>
+                )}
+                {property.antiguedad !== undefined && (
+                  <div className="flex items-center gap-3">
+                    <CalendarDays size={28} strokeWidth={1.5} className="text-gray" />
+                    <div>
+                      <span className="block font-sans text-xl font-semibold text-foreground">
+                        {property.antiguedad === 0 ? 'A estrenar' : `${property.antiguedad} años`}
+                      </span>
+                      <span className="block font-sans text-sm text-gray">Antigüedad</span>
                     </div>
                   </div>
                 )}
