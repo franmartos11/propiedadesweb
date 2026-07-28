@@ -56,10 +56,10 @@ export function PropertySearch() {
                   key={op}
                   type="button"
                   onClick={() => setOperacion(op)}
-                  className={`flex-1 md:flex-none px-6 py-3 md:py-2.5 rounded-full font-sans text-xs uppercase tracking-[0.2em] transition-all duration-300 ${
+                  className={`flex-1 md:flex-none px-6 py-3 md:py-2.5 rounded-full font-sans text-xs uppercase tracking-[0.2em] transition-all duration-300 min-h-[48px] md:min-h-0 ${
                     operacion === op
                       ? 'bg-white text-brand shadow-sm font-semibold'
-                      : 'text-gray hover:text-foreground'
+                      : 'text-foreground/80 hover:text-foreground'
                   }`}
                 >
                   {op === 'Alquiler' ? 'Alquiler' : op}
@@ -77,9 +77,10 @@ export function PropertySearch() {
                   <Home size={18} strokeWidth={1.5} />
                 </div>
                 <select
+                  aria-label="Tipo de inmueble"
                   value={tipoProp}
                   onChange={(e) => setTipoProp(e.target.value)}
-                  className="w-full bg-transparent pl-12 pr-10 py-4 md:py-3 font-sans text-sm text-foreground focus:outline-none appearance-none cursor-pointer group-hover:bg-black/5 transition-colors md:rounded-full"
+                  className="w-full min-h-[48px] bg-transparent pl-12 pr-10 py-4 md:py-3 font-sans text-sm text-foreground focus:outline-none appearance-none cursor-pointer group-hover:bg-black/5 transition-colors md:rounded-full"
                 >
                   <option value="">Tipo de Inmueble - Indistinto</option>
                   {TIPOS_PROP.map(t => <option key={t} value={t}>{t}</option>)}
@@ -95,9 +96,10 @@ export function PropertySearch() {
                   <Map size={18} strokeWidth={1.5} />
                 </div>
                 <select
+                  aria-label="Localidad"
                   value={localidad}
                   onChange={(e) => setLocalidad(e.target.value)}
-                  className="w-full bg-transparent pl-12 pr-10 py-4 md:py-3 font-sans text-sm text-foreground focus:outline-none appearance-none cursor-pointer group-hover:bg-black/5 transition-colors md:rounded-full"
+                  className="w-full min-h-[48px] bg-transparent pl-12 pr-10 py-4 md:py-3 font-sans text-sm text-foreground focus:outline-none appearance-none cursor-pointer group-hover:bg-black/5 transition-colors md:rounded-full"
                 >
                   <option value="">Localidades - Indistinto</option>
                   {LOCALIDADES.map(z => <option key={z} value={z}>{z}</option>)}
@@ -113,9 +115,10 @@ export function PropertySearch() {
                   <MapPin size={18} strokeWidth={1.5} />
                 </div>
                 <select
+                  aria-label="Barrio"
                   value={barrio}
                   onChange={(e) => setBarrio(e.target.value)}
-                  className="w-full bg-transparent pl-12 pr-10 py-4 md:py-3 font-sans text-sm text-foreground focus:outline-none appearance-none cursor-pointer group-hover:bg-black/5 transition-colors md:rounded-full"
+                  className="w-full min-h-[48px] bg-transparent pl-12 pr-10 py-4 md:py-3 font-sans text-sm text-foreground focus:outline-none appearance-none cursor-pointer group-hover:bg-black/5 transition-colors md:rounded-full"
                 >
                   <option value="">Barrios - Indistinto</option>
                   {barriosDisponibles.map(b => <option key={b} value={b}>{b}</option>)}
@@ -129,7 +132,7 @@ export function PropertySearch() {
             {/* Botón Buscar */}
             <button
               type="submit"
-              className="w-full md:w-auto shrink-0 bg-brand hover:bg-brand/90 text-white rounded-xl md:rounded-full px-8 py-4 md:py-3 flex items-center justify-center gap-2 transition-colors font-sans text-sm uppercase tracking-widest font-medium"
+              className="w-full md:w-auto min-h-[48px] shrink-0 bg-brand hover:bg-brand/90 text-white rounded-xl md:rounded-full px-8 py-4 md:py-3 flex items-center justify-center gap-2 transition-colors font-sans text-sm uppercase tracking-widest font-medium"
             >
               <Search size={18} />
               <span className="md:hidden lg:inline">Buscar</span>
