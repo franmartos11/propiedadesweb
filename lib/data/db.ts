@@ -91,10 +91,10 @@ export const getProperties = unstable_cache(
       results = staticProperties as Property[];
     }
 
-    // Agregar vista 360 de prueba en todas las propiedades
+    // Agregar vista 360 de prueba en todas las propiedades (interior de una casa)
     return results.map(p => ({
       ...p,
-      tour360Urls: ['/bg-4.jpg']
+      tour360Urls: ['https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/2294472375_24a3b8ef46_o.jpg']
     }));
   },
   ['properties-all'],
@@ -172,11 +172,11 @@ export const getPropertyById = unstable_cache(
       // Fallback to static just in case
       const staticProp = (staticProperties as Property[]).find((p) => p.id === id) ?? null;
       if (staticProp) {
-        return { ...staticProp, tour360Urls: ['/bg-4.jpg'] };
+        return { ...staticProp, tour360Urls: ['https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/2294472375_24a3b8ef46_o.jpg'] };
       }
       return null;
     }
-    return { ...(data as Property), tour360Urls: ['/bg-4.jpg'] };
+    return { ...(data as Property), tour360Urls: ['https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/2294472375_24a3b8ef46_o.jpg'] };
   },
   ['property-by-id'],
   { tags: ['properties'], revalidate: 3600 }
