@@ -29,7 +29,7 @@ export async function getLeads(): Promise<Lead[]> {
     .order('creadoEn', { ascending: false });
 
   if (error) {
-    console.error('Error fetching leads:', error);
+    console.error('Error fetching leads:', error.message || JSON.stringify(error));
     return [];
   }
   return data as Lead[];

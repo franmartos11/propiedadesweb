@@ -13,8 +13,8 @@ CREATE TABLE IF NOT EXISTS public.properties (
     tipo TEXT NOT NULL, -- 'Venta' o 'Arriendo'
     precio NUMERIC NOT NULL,
     moneda TEXT NOT NULL, -- 'USD' o 'ARS'
-    m2Util NUMERIC NOT NULL,
-    m2Total NUMERIC NOT NULL,
+    "m2Util" NUMERIC NOT NULL,
+    "m2Total" NUMERIC NOT NULL,
     habitaciones INTEGER NOT NULL,
     banos INTEGER NOT NULL,
     estacionamientos INTEGER NOT NULL,
@@ -23,9 +23,9 @@ CREATE TABLE IF NOT EXISTS public.properties (
     lng NUMERIC NOT NULL,
     descripcion TEXT NOT NULL,
     imagenes JSONB NOT NULL DEFAULT '[]'::jsonb,
-    tour360Urls JSONB DEFAULT '[]'::jsonb,
+    "tour360Urls" JSONB DEFAULT '[]'::jsonb,
     destacada BOOLEAN NOT NULL DEFAULT false,
-    updatedAt TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+    "updatedAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
 -- 2. Tabla de Leads (Consultas)
@@ -38,15 +38,15 @@ CREATE TABLE IF NOT EXISTS public.leads (
     mensaje TEXT NOT NULL,
     estado TEXT NOT NULL DEFAULT 'Nuevo', -- 'Nuevo', 'Contactado', 'En seguimiento', 'Cerrado'
     notas TEXT,
-    creadoEn TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+    "creadoEn" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
 -- 3. Tabla de Analytics
 CREATE TABLE IF NOT EXISTS public.analytics (
     id TEXT PRIMARY KEY,
     type TEXT NOT NULL, -- 'property_view' o 'property_inquiry'
-    propertyId TEXT NOT NULL,
-    propertyType TEXT NOT NULL, -- 'Venta' o 'Arriendo'
+    "propertyId" TEXT NOT NULL,
+    "propertyType" TEXT NOT NULL, -- 'Venta' o 'Arriendo'
     timestamp TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
