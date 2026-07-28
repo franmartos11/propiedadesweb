@@ -4,93 +4,61 @@ import * as React from 'react';
 import Image from 'next/image';
 import { AnimatedNumber } from '../ui/AnimatedNumber';
 import { Reveal } from '../ui/Reveal';
-import { Award, Key, Users } from 'lucide-react';
 
 const stats = [
-  { 
-    label: 'Años de experiencia en el mercado', 
-    value: 15, 
-    suffix: '+', 
-    icon: <Award size={32} strokeWidth={1.5} className="text-brand mb-4" />,
-    colSpan: 'md:col-span-1 md:row-span-2'
-  },
-  { 
-    label: 'Propiedades vendidas con éxito', 
-    value: 250, 
-    suffix: '+', 
-    icon: <Key size={28} strokeWidth={1.5} className="text-brand mb-4" />,
-    colSpan: 'md:col-span-1'
-  },
-  { 
-    label: 'Familias asesoradas anualmente', 
-    value: 400, 
-    suffix: '+', 
-    icon: <Users size={28} strokeWidth={1.5} className="text-brand mb-4" />,
-    colSpan: 'md:col-span-1'
-  },
+  { label: 'Años de experiencia en el mercado', value: 15, suffix: '+', prefix: '' },
+  { label: 'Propiedades vendidas con éxito', value: 250, suffix: '+', prefix: '' },
+  { label: 'Familias asesoradas anualmente', value: 400, suffix: '+', prefix: '' },
 ];
 
 export function NumbersSection() {
   return (
-    <section className="relative py-24 md:py-32 overflow-hidden bg-foreground">
-      {/* Background Image with Dark Overlay */}
-      <div className="absolute inset-0 z-0">
-        <Image
-          src="/bg-4.jpg"
-          alt="Villalba Martinez Inmobiliaria"
-          fill
-          className="object-cover opacity-40 mix-blend-luminosity"
-          sizes="100vw"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-foreground via-foreground/95 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-foreground via-transparent to-foreground/80" />
-      </div>
-
-      <div className="container relative z-10 mx-auto px-6 md:px-12 max-w-screen-xl">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-12 items-center">
+    <section className="py-24 md:py-32 bg-surface overflow-hidden">
+      <div className="container mx-auto px-6 md:px-12 max-w-screen-xl">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
           
-          {/* Lado Izquierdo: Text */}
-          <div className="lg:col-span-5 flex flex-col justify-center">
-            <Reveal delay={0.1}>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 backdrop-blur-md mb-8">
-                <span className="w-2 h-2 rounded-full bg-brand animate-pulse" />
-                <span className="text-white/90 text-xs font-semibold tracking-widest uppercase">Nuestra Trayectoria</span>
-              </div>
-              <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl text-white leading-tight tracking-tight mb-8">
+          {/* Lado Izquierdo: Imagen arquitectónica */}
+          <Reveal>
+            <div className="relative w-full aspect-[4/5] md:aspect-square rounded-2xl overflow-hidden shadow-2xl">
+              <Image
+                src="/bg-2.jpg"
+                alt="Arquitectura y diseño"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+              <div className="absolute inset-0 bg-brand/10 mix-blend-multiply" />
+            </div>
+          </Reveal>
+
+          {/* Lado Derecho: Números e historia */}
+          <div className="flex flex-col justify-center">
+            <Reveal delay={0.2}>
+              <h2 className="font-serif text-4xl md:text-5xl text-foreground leading-tight tracking-tight mb-8">
                 Construimos relaciones basadas en <br className="hidden md:block"/>
-                <span className="italic text-brand">confianza y resultados</span>
+                <span className="italic text-brand text-5xl md:text-6xl">confianza y resultados</span>
               </h2>
-              <p className="font-sans text-white/70 text-lg leading-relaxed max-w-lg">
-                Nuestro profundo conocimiento del mercado cordobés nos permite asegurar el éxito en cada operación, cuidando el patrimonio de nuestros clientes como si fuera propio. Nos avalan los resultados.
+              <p className="font-sans text-gray text-lg leading-relaxed mb-16 max-w-lg">
+                Nuestro profundo conocimiento del mercado cordobés nos permite asegurar el éxito en cada operación, cuidando el patrimonio de nuestros clientes como si fuera propio.
               </p>
             </Reveal>
-          </div>
 
-          {/* Lado Derecho: Bento Box Stats */}
-          <div className="lg:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6 md:auto-rows-fr">
-            {stats.map((stat, i) => (
-              <Reveal key={i} delay={0.3 + (i * 0.15)} className={stat.colSpan}>
-                <div className={`
-                  flex flex-col h-full justify-center p-8 lg:p-10 rounded-3xl
-                  bg-white/5 hover:bg-white/10 border border-white/10
-                  backdrop-blur-md transition-all duration-500 group
-                  hover:-translate-y-1 hover:shadow-2xl hover:border-brand/30
-                `}>
-                  <div className="transform group-hover:scale-110 transition-transform duration-500 origin-left">
-                    {stat.icon}
+            <div className="flex flex-col gap-10 border-l-2 border-border pl-8 md:pl-12">
+              {stats.map((stat, i) => (
+                <Reveal key={i} delay={0.4 + (i * 0.15)}>
+                  <div className="flex flex-col">
+                    <div className="font-serif text-5xl md:text-6xl text-foreground flex items-baseline gap-1 mb-2">
+                      {stat.prefix && <span className="text-brand text-3xl mr-1">{stat.prefix}</span>}
+                      <AnimatedNumber value={stat.value} className="text-foreground" />
+                      <span className="text-brand text-4xl">{stat.suffix}</span>
+                    </div>
+                    <p className="font-sans text-gray text-xs uppercase tracking-[0.2em] font-medium max-w-[200px]">
+                      {stat.label}
+                    </p>
                   </div>
-                  
-                  <div className="font-serif text-5xl md:text-6xl lg:text-7xl text-white flex items-baseline gap-1 mb-3">
-                    <AnimatedNumber value={stat.value} className="text-white drop-shadow-sm" />
-                    <span className="text-brand text-4xl lg:text-5xl">{stat.suffix}</span>
-                  </div>
-                  
-                  <p className="font-sans text-white/70 text-xs lg:text-sm uppercase tracking-[0.15em] font-medium leading-relaxed max-w-[200px]">
-                    {stat.label}
-                  </p>
-                </div>
-              </Reveal>
-            ))}
+                </Reveal>
+              ))}
+            </div>
           </div>
           
         </div>

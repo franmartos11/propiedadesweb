@@ -36,9 +36,7 @@ export function ServicesSection() {
         <Reveal>
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-6">
             <div className="max-w-2xl">
-              <span className="inline-block py-1 px-3 border border-brand/30 rounded-full text-brand text-xs tracking-widest uppercase mb-6 bg-brand/5">
-                Experiencia y Trayectoria
-              </span>
+
               <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl text-foreground leading-tight tracking-tight">
                 El estándar de <span className="italic text-brand">excelencia</span> <br className="hidden md:block"/> en servicios inmobiliarios
               </h2>

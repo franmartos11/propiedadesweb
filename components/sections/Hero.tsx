@@ -55,15 +55,7 @@ export function Hero() {
       <div className="relative z-10 h-full flex flex-col justify-center px-6 md:px-16 max-w-[1400px] mx-auto w-full">
         
         <div className="max-w-3xl mt-20">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <span className="inline-block py-1 px-3 border border-white/30 rounded-full text-white/80 text-xs tracking-widest uppercase mb-8 backdrop-blur-sm">
-              Córdoba · Argentina · Est. 2009
-            </span>
-          </motion.div>
+
 
           <motion.div
             initial={{ opacity: 0, y: 40 }}
