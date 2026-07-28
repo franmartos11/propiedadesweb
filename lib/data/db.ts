@@ -97,7 +97,7 @@ export const getProperties = unstable_cache(
       tour360Urls: ['https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/2294472375_24a3b8ef46_o.jpg']
     }));
   },
-  ['properties-all'],
+  ['properties-all-v2'],
   { tags: ['properties'], revalidate: 3600 }
 );
 
@@ -178,6 +178,6 @@ export const getPropertyById = unstable_cache(
     }
     return { ...(data as Property), tour360Urls: ['https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/2294472375_24a3b8ef46_o.jpg'] };
   },
-  ['property-by-id'],
+  ['property-by-id-v2'],
   { tags: ['properties'], revalidate: 3600 }
 );
