@@ -10,8 +10,9 @@ interface VirtualTour360Props {
 }
 
 function Sphere({ imageUrl }: { imageUrl: string }) {
-  // Cargamos la textura equirectangular
-  const texture = useLoader(THREE.TextureLoader, imageUrl);
+  const texture = useLoader(THREE.TextureLoader, imageUrl, (loader) => {
+    loader.setCrossOrigin('anonymous');
+  });
   
   // Para que la imagen panorámica se vea correctamente mapeada por dentro
   // de la esfera, necesitamos invertirla horizontalmente.
