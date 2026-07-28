@@ -101,10 +101,10 @@ export function VirtualTourModal({ tourUrls }: VirtualTourModalProps) {
                       key={idx}
                       onClick={() => changeScene(idx)}
                       className={`flex flex-col items-center gap-1.5 shrink-0 group transition-all duration-300 ${
-                        currentIndex === idx ? 'scale-110' : 'opacity-50 hover:opacity-80'
+                        currentIndex === idx ? 'opacity-100' : 'opacity-50 hover:opacity-80'
                       }`}
                     >
-                      {/* Thumbnail placeholder — color sólido identificador */}
+                      {/* Thumbnail placeholder */}
                       <div
                         className={`relative w-20 h-14 rounded-lg overflow-hidden border-2 transition-all duration-300 ${
                           currentIndex === idx
@@ -117,7 +117,9 @@ export function VirtualTourModal({ tourUrls }: VirtualTourModalProps) {
                           <View size={18} className="text-white/70" />
                         </div>
                       </div>
-                      <span className="text-white/70 font-sans text-[10px] tracking-widest uppercase text-center line-clamp-2 w-[90px] leading-tight mt-1">
+                      <span className={`font-sans text-[10px] tracking-widest uppercase text-center line-clamp-2 w-[90px] leading-tight mt-1 transition-colors duration-300 ${
+                        currentIndex === idx ? 'text-white font-semibold' : 'text-white/60'
+                      }`}>
                         {scene.name}
                       </span>
                     </button>
