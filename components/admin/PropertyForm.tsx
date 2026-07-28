@@ -32,6 +32,8 @@ export function PropertyForm({ initialData, isEdit }: PropertyFormProps) {
     imagenes: initialData?.imagenes.join('\n') ?? '', // textArea por líneas
     tour360Urls: initialData?.tour360Urls?.join('\n') ?? '',
     destacada: initialData?.destacada ?? false,
+    lat: initialData?.lat ?? -31.4201, // Default to Cordoba
+    lng: initialData?.lng ?? -64.1888,
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -43,7 +45,7 @@ export function PropertyForm({ initialData, isEdit }: PropertyFormProps) {
       return;
     }
 
-    const numberFields = ['precio', 'm2Util', 'm2Total', 'habitaciones', 'banos', 'estacionamientos', 'antiguedad'];
+    const numberFields = ['precio', 'm2Util', 'm2Total', 'habitaciones', 'banos', 'estacionamientos', 'antiguedad', 'lat', 'lng'];
     const finalValue = numberFields.includes(name) ? Number(value) : value;
 
     setFormData(prev => ({ ...prev, [name]: finalValue }));
@@ -176,6 +178,18 @@ export function PropertyForm({ initialData, isEdit }: PropertyFormProps) {
           <div>
             <label className={labelClasses}>Ciudad / Comuna</label>
             <input name="comuna" value={formData.comuna} onChange={handleChange} required className={inputClasses} />
+          </div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+          <div>
+            <label className={labelClasses}>Latitud del Mapa</label>
+            <input type="number" step="any" name="lat" value={formData.lat} onChange={handleChange} required className={inputClasses} />
+            <p className="text-xs text-muted-foreground mt-1">Ej: -31.4201</p>
+          </div>
+          <div>
+            <label className={labelClasses}>Longitud del Mapa</label>
+            <input type="number" step="any" name="lng" value={formData.lng} onChange={handleChange} required className={inputClasses} />
+            <p className="text-xs text-muted-foreground mt-1">Ej: -64.1888</p>
           </div>
         </div>
       </div>
