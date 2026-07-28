@@ -94,8 +94,8 @@ export const getProperties = unstable_cache(
     // Agregar vista 360 de prueba con múltiples habitaciones
     const testTour = [
       { url: 'https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/2294472375_24a3b8ef46_o.jpg', name: 'Living Comedor' },
-      { url: 'https://raw.githubusercontent.com/vthibault/rooster/master/assets/textures/equirectangular/equirectangular.jpg', name: 'Dormitorio' },
-      { url: 'https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/2294472375_24a3b8ef46_o.jpg', name: 'Cocina' }
+      { url: '/bg-2.jpg', name: 'Dormitorio' },
+      { url: '/bg-4.jpg', name: 'Cocina' }
     ];
 
     return results.map(p => ({
@@ -176,8 +176,8 @@ export const getPropertyById = unstable_cache(
 
     const testTour = [
       { url: 'https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/2294472375_24a3b8ef46_o.jpg', name: 'Living Comedor' },
-      { url: 'https://raw.githubusercontent.com/vthibault/rooster/master/assets/textures/equirectangular/equirectangular.jpg', name: 'Dormitorio' },
-      { url: 'https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/2294472375_24a3b8ef46_o.jpg', name: 'Cocina' }
+      { url: '/bg-2.jpg', name: 'Dormitorio' },
+      { url: '/bg-4.jpg', name: 'Cocina' }
     ];
 
     if (error || !data) {
