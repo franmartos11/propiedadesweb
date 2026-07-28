@@ -79,7 +79,7 @@ export async function getProperties(): Promise<Property[]> {
     .order('updatedAt', { ascending: false });
 
   if (error) {
-    console.error('Error fetching properties from Supabase, falling back to static:', error);
+    console.warn('Warning: Could not fetch properties from Supabase, falling back to static data.', error);
     return staticProperties as Property[]; // Fallback for local testing if table is empty
   }
 
