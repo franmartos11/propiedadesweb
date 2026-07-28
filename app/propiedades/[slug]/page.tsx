@@ -118,53 +118,43 @@ export default async function PropertyPage({ params, searchParams }: Props) {
 
               {/* Specs */}
               <div className="flex flex-wrap gap-8 py-6 border-y border-border">
-                {property.m2Total > 0 && (
-                  <div className="flex items-center gap-3">
-                    <Maximize2 size={28} strokeWidth={1.5} className="text-gray" />
-                    <div>
-                      <span className="block font-sans text-xl font-semibold text-foreground">{property.m2Total} m²</span>
-                      <span className="block font-sans text-sm text-gray">Superficie Total</span>
-                    </div>
+                <div className="flex items-center gap-3">
+                  <Maximize2 size={28} strokeWidth={1.5} className="text-gray" />
+                  <div>
+                    <span className="block font-sans text-xl font-semibold text-foreground">{property.m2Total > 0 ? property.m2Total : '-'} m²</span>
+                    <span className="block font-sans text-sm text-gray">Superficie Total</span>
                   </div>
-                )}
-                {property.habitaciones > 0 && (
-                  <div className="flex items-center gap-3">
-                    <Bed size={28} strokeWidth={1.5} className="text-gray" />
-                    <div>
-                      <span className="block font-sans text-xl font-semibold text-foreground">{property.habitaciones}</span>
-                      <span className="block font-sans text-sm text-gray">Dormitorios</span>
-                    </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Bed size={28} strokeWidth={1.5} className="text-gray" />
+                  <div>
+                    <span className="block font-sans text-xl font-semibold text-foreground">{property.habitaciones > 0 ? property.habitaciones : '-'}</span>
+                    <span className="block font-sans text-sm text-gray">Dormitorios</span>
                   </div>
-                )}
-                {property.banos > 0 && (
-                  <div className="flex items-center gap-3">
-                    <Bath size={28} strokeWidth={1.5} className="text-gray" />
-                    <div>
-                      <span className="block font-sans text-xl font-semibold text-foreground">{property.banos}</span>
-                      <span className="block font-sans text-sm text-gray">Baños</span>
-                    </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Bath size={28} strokeWidth={1.5} className="text-gray" />
+                  <div>
+                    <span className="block font-sans text-xl font-semibold text-foreground">{property.banos > 0 ? property.banos : '-'}</span>
+                    <span className="block font-sans text-sm text-gray">Baños</span>
                   </div>
-                )}
-                {property.antiguedad !== undefined && (
-                  <div className="flex items-center gap-3">
-                    <CalendarDays size={28} strokeWidth={1.5} className="text-gray" />
-                    <div>
-                      <span className="block font-sans text-xl font-semibold text-foreground">
-                        {property.antiguedad === 0 ? 'A estrenar' : `${property.antiguedad} años`}
-                      </span>
-                      <span className="block font-sans text-sm text-gray">Antigüedad</span>
-                    </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <CalendarDays size={28} strokeWidth={1.5} className="text-gray" />
+                  <div>
+                    <span className="block font-sans text-xl font-semibold text-foreground">
+                      {property.antiguedad === 0 || property.antiguedad === undefined ? '-' : `${property.antiguedad} años`}
+                    </span>
+                    <span className="block font-sans text-sm text-gray">Antigüedad</span>
                   </div>
-                )}
-                {property.estacionamientos > 0 && (
-                  <div className="flex items-center gap-3">
-                    <Car size={28} strokeWidth={1.5} className="text-gray" />
-                    <div>
-                      <span className="block font-sans text-xl font-semibold text-foreground">{property.estacionamientos}</span>
-                      <span className="block font-sans text-sm text-gray">Cocheras</span>
-                    </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Car size={28} strokeWidth={1.5} className="text-gray" />
+                  <div>
+                    <span className="block font-sans text-xl font-semibold text-foreground">{property.estacionamientos > 0 ? property.estacionamientos : '-'}</span>
+                    <span className="block font-sans text-sm text-gray">Cocheras</span>
                   </div>
-                )}
+                </div>
               </div>
 
               {/* Description */}

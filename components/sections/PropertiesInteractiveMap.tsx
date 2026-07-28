@@ -105,13 +105,10 @@ export function PropertiesInteractiveMap({ properties, hoveredPropertyId, onHove
               <p className="font-sans font-medium text-xs text-foreground line-clamp-1 mt-0.5">{previewProperty.nombre}</p>
               <p className="font-sans text-xs text-gray">{previewProperty.barrio}</p>
             </div>
-            <div className="flex items-center gap-3 text-gray">
-              {previewProperty.habitaciones > 0 && (
-                <span className="flex items-center gap-1 text-xs"><Bed size={11} />{previewProperty.habitaciones}</span>
-              )}
-              {previewProperty.m2Total > 0 && (
-                <span className="flex items-center gap-1 text-xs"><Maximize2 size={11} />{previewProperty.m2Total} m²</span>
-              )}
+            <div className="flex items-center gap-3 text-gray mt-2">
+              <span className="flex items-center gap-1 text-xs"><Bed size={11} />{previewProperty.habitaciones > 0 ? previewProperty.habitaciones : '-'}</span>
+              <span className="flex items-center gap-1 text-xs"><Bath size={11} />{previewProperty.banos > 0 ? previewProperty.banos : '-'}</span>
+              <span className="flex items-center gap-1 text-xs"><Maximize2 size={11} />{previewProperty.m2Total > 0 ? previewProperty.m2Total : (previewProperty.m2Util > 0 ? previewProperty.m2Util : '-')} m²</span>
             </div>
           </div>
           <button

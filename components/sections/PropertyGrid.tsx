@@ -102,27 +102,23 @@ function PropertyCard({ property, isHovered, onHover, from }: PropertyCardProps)
         <div className="h-px bg-border" />
 
         {/* Specs */}
-        <div className="flex items-center gap-4 text-gray">
-          {property.habitaciones > 0 && (
-            <span className="flex items-center gap-1.5 font-sans text-xs">
-              <Bed size={13} strokeWidth={1.5} />
-              {property.habitaciones} dorm.
-            </span>
-          )}
+        <div className="flex items-center justify-between gap-2 text-gray w-full px-1">
+          <span className="flex items-center gap-1.5 font-sans text-xs">
+            <Bed size={13} strokeWidth={1.5} />
+            {property.habitaciones > 0 ? property.habitaciones : '-'} dorm.
+          </span>
           <span className="flex items-center gap-1.5 font-sans text-xs">
             <Bath size={13} strokeWidth={1.5} />
-            {property.banos} baño{property.banos !== 1 ? 's' : ''}
+            {property.banos > 0 ? property.banos : '-'} baño{property.banos !== 1 ? 's' : ''}
           </span>
           <span className="flex items-center gap-1.5 font-sans text-xs">
             <Maximize2 size={13} strokeWidth={1.5} />
-            {property.m2Util} m²
+            {property.m2Total > 0 ? property.m2Total : (property.m2Util > 0 ? property.m2Util : '-')} m²
           </span>
-          {property.estacionamientos > 0 && (
-            <span className="flex items-center gap-1.5 font-sans text-xs">
-              <Car size={13} strokeWidth={1.5} />
-              {property.estacionamientos}
-            </span>
-          )}
+          <span className="flex items-center gap-1.5 font-sans text-xs">
+            <Car size={13} strokeWidth={1.5} />
+            {property.estacionamientos > 0 ? property.estacionamientos : '-'} coch.
+          </span>
         </div>
       </div>
     </Link>

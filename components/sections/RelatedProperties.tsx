@@ -48,16 +48,10 @@ export function RelatedProperties({ properties }: Props) {
                   <p className="font-sans font-bold text-brand text-lg">{priceLabel}</p>
                   <p className="font-sans text-sm text-foreground font-medium line-clamp-1">{p.nombre}</p>
                   <p className="font-sans text-xs text-gray">{p.barrio}</p>
-                  <div className="flex items-center gap-3 text-gray pt-1 border-t border-border">
-                    {p.habitaciones > 0 && (
-                      <span className="flex items-center gap-1 text-xs"><Bed size={12} />{p.habitaciones} dorm.</span>
-                    )}
-                    {p.banos > 0 && (
-                      <span className="flex items-center gap-1 text-xs"><Bath size={12} />{p.banos} baños</span>
-                    )}
-                    {p.m2Total > 0 && (
-                      <span className="flex items-center gap-1 text-xs"><Maximize2 size={12} />{p.m2Total} m²</span>
-                    )}
+                  <div className="flex items-center gap-3 text-gray mt-1">
+                    <span className="flex items-center gap-1 text-xs"><Bed size={12} />{p.habitaciones > 0 ? p.habitaciones : '-'} dorm.</span>
+                    <span className="flex items-center gap-1 text-xs"><Bath size={12} />{p.banos > 0 ? p.banos : '-'} baño{p.banos !== 1 ? 's' : ''}</span>
+                    <span className="flex items-center gap-1 text-xs"><Maximize2 size={12} />{p.m2Total > 0 ? p.m2Total : (p.m2Util > 0 ? p.m2Util : '-')} m²</span>
                   </div>
                 </div>
               </Link>
