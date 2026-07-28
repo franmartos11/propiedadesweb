@@ -10,7 +10,7 @@ export async function Footer() {
     <footer className="bg-white border-t border-border">
       <div className="container mx-auto px-6 md:px-12 py-16 md:py-20">
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-10 md:mb-16">
 
           {/* Branding */}
           <div>

@@ -143,6 +143,29 @@ export function SearchLayout({ initialProperties, title, from }: SearchLayoutPro
     map: <Map size={16} />,
   };
 
+  const activeFiltersKeys = [
+    { key: 'minPrice', val: minPrice, label: minPrice ? `Desde $${parseInt(minPrice).toLocaleString('es-AR')}` : '' },
+    { key: 'maxPrice', val: maxPrice, label: maxPrice ? `Hasta $${parseInt(maxPrice).toLocaleString('es-AR')}` : '' },
+    { key: 'rooms', val: rooms, label: rooms ? `${rooms}+ dorm.` : '' },
+    { key: 'baths', val: baths, label: baths ? `${baths}+ baños` : '' },
+    { key: 'propType', val: propType !== 'Todos' ? propType : '', label: propType !== 'Todos' ? propType : '' },
+    { key: 'm2', val: minM2 || maxM2 ? 'm2' : '', label: minM2 && maxM2 ? `${minM2}–${maxM2} m²` : minM2 ? `Desde ${minM2} m²` : maxM2 ? `Hasta ${maxM2} m²` : '' },
+  ].filter(f => f.val);
+
+  const visibleFiltersMobile = activeFiltersKeys.slice(0, 2);
+  const hiddenFiltersCount = activeFiltersKeys.length - visibleFiltersMobile.length;
+
+  const handleRemoveFilter = (key: string) => {
+    switch (key) {
+      case 'minPrice': setMinPrice(''); syncToUrl({ minP: '' }); break;
+      case 'maxPrice': setMaxPrice(''); syncToUrl({ maxP: '' }); break;
+      case 'rooms': setRooms(''); syncToUrl({ dorm: '' }); break;
+      case 'baths': setBaths(''); syncToUrl({ banos: '' }); break;
+      case 'propType': setPropTypeAndSync('Todos'); break;
+      case 'm2': setMinM2(''); setMaxM2(''); syncToUrl({ minM2: '', maxM2: '' }); break;
+    }
+  };
+
   return (
     <div className="flex flex-col h-full">
       {/* ═══ Header ═══ */}
@@ -155,29 +178,23 @@ export function SearchLayout({ initialProperties, title, from }: SearchLayoutPro
             </span>
           </div>
 
-          {/* Active filter pills */}
+          {/* Active filter pills - Desktop all, Mobile limited */}
           <div className="flex items-center gap-2 flex-wrap flex-1">
-            {minPrice && (
-              <FilterPill label={`Desde $${parseInt(minPrice).toLocaleString('es-AR')}`} onRemove={() => { setMinPrice(''); syncToUrl({ minP: '' }); }} />
-            )}
-            {maxPrice && (
-              <FilterPill label={`Hasta $${parseInt(maxPrice).toLocaleString('es-AR')}`} onRemove={() => { setMaxPrice(''); syncToUrl({ maxP: '' }); }} />
-            )}
-            {rooms && (
-              <FilterPill label={`${rooms}+ dorm.`} onRemove={() => { setRooms(''); syncToUrl({ dorm: '' }); }} />
-            )}
-            {baths && (
-              <FilterPill label={`${baths}+ baños`} onRemove={() => { setBaths(''); syncToUrl({ banos: '' }); }} />
-            )}
-            {propType !== 'Todos' && (
-              <FilterPill label={propType} onRemove={() => setPropTypeAndSync('Todos')} />
-            )}
-            {(minM2 || maxM2) && (
-              <FilterPill
-                label={minM2 && maxM2 ? `${minM2}–${maxM2} m²` : minM2 ? `Desde ${minM2} m²` : `Hasta ${maxM2} m²`}
-                onRemove={() => { setMinM2(''); setMaxM2(''); syncToUrl({ minM2: '', maxM2: '' }); }}
-              />
-            )}
+            <div className="hidden md:flex items-center gap-2 flex-wrap">
+              {activeFiltersKeys.map(f => (
+                <FilterPill key={f.key} label={f.label} onRemove={() => handleRemoveFilter(f.key)} />
+              ))}
+            </div>
+            
+            <div className="flex md:hidden items-center gap-2 flex-wrap">
+              {visibleFiltersMobile.map(f => (
+                <FilterPill key={f.key} label={f.label} onRemove={() => handleRemoveFilter(f.key)} />
+              ))}
+              {hiddenFiltersCount > 0 && (
+                <span className="text-xs font-sans text-gray">+{hiddenFiltersCount} más</span>
+              )}
+            </div>
+
             {activeFiltersCount > 0 && (
               <button onClick={clearAll} className="text-xs text-brand underline font-sans ml-1 cursor-pointer">
                 Limpiar todo
@@ -239,10 +256,29 @@ export function SearchLayout({ initialProperties, title, from }: SearchLayoutPro
       {/* ═══ Body ═══ */}
       <div className="container mx-auto px-4 sm:px-6 md:px-12 py-6 flex gap-6 flex-1">
 
+        {/* Overlay móvil */}
+        {showFiltersMobile && (
+          <div 
+            className="fixed inset-0 bg-black/50 z-40 md:hidden" 
+            onClick={() => setShowFiltersMobile(false)}
+          />
+        )}
+
         {/* Sidebar Filters */}
-        <aside className={`shrink-0 w-[260px] ${showFiltersMobile ? 'flex' : 'hidden'} md:flex flex-col gap-0`}>
-          <div className="sticky top-36 flex flex-col gap-5 bg-white border border-border rounded-xl p-5 shadow-sm">
-            <p className="font-sans font-bold text-sm uppercase tracking-widest text-foreground">Filtrar</p>
+        <aside className={`
+          fixed inset-y-0 left-0 z-50 w-full max-w-sm bg-white overflow-y-auto transform transition-transform duration-300 md:static md:w-[260px] md:transform-none md:shrink-0 md:bg-transparent md:z-auto
+          ${showFiltersMobile ? 'translate-x-0 shadow-2xl' : '-translate-x-full md:translate-x-0'}
+        `}>
+          <div className="sticky top-0 md:top-36 flex flex-col gap-5 md:bg-white md:border md:border-border rounded-none md:rounded-xl p-5 md:shadow-sm">
+            <div className="flex items-center justify-between">
+              <p className="font-sans font-bold text-sm uppercase tracking-widest text-foreground">Filtrar</p>
+              <button 
+                onClick={() => setShowFiltersMobile(false)}
+                className="md:hidden p-2 text-gray hover:text-foreground"
+              >
+                <X size={20} />
+              </button>
+            </div>
 
             {/* Property Type */}
             <div>

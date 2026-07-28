@@ -117,25 +117,27 @@ export function ServicesSection() {
               <Reveal key={service.id} delay={i * 0.12}>
                 <button
                   onClick={() => setActiveService(service)}
-                  className="group w-full text-left grid grid-cols-1 md:grid-cols-[80px_1fr_280px_48px] gap-4 md:gap-8 items-center py-8 md:py-10 hover:bg-white/60 transition-all duration-300 px-2 md:px-4 -mx-2 md:-mx-4 rounded-xl cursor-pointer"
+                  className="group w-full text-left flex flex-row md:grid md:grid-cols-[80px_1fr_280px_48px] justify-between gap-4 md:gap-8 items-center py-6 md:py-10 hover:bg-white/60 transition-all duration-300 px-2 md:px-4 -mx-2 md:-mx-4 rounded-xl cursor-pointer"
                 >
-                  {/* Número */}
-                  <span className="font-sans text-xs text-gray/50 tracking-[0.2em] hidden md:block">
-                    {service.number}
-                  </span>
+                  <div className="flex flex-col md:contents">
+                    {/* Número */}
+                    <span className="font-sans text-xs text-gray/50 tracking-[0.2em] hidden md:block">
+                      {service.number}
+                    </span>
 
-                  {/* Título */}
-                  <h3 className="font-serif text-2xl md:text-3xl text-foreground group-hover:text-brand transition-colors duration-300">
-                    {service.title}
-                  </h3>
+                    {/* Título */}
+                    <h3 className="font-serif text-2xl md:text-3xl text-foreground group-hover:text-brand transition-colors duration-300 mb-1 md:mb-0">
+                      {service.title}
+                    </h3>
 
-                  {/* Tagline corta */}
-                  <p className="font-sans text-gray text-sm leading-relaxed italic">
-                    {service.tagline}
-                  </p>
+                    {/* Tagline corta */}
+                    <p className="font-sans text-gray text-sm leading-relaxed italic">
+                      {service.tagline}
+                    </p>
+                  </div>
 
                   {/* Flecha */}
-                  <div className="w-10 h-10 rounded-full border border-foreground/20 flex items-center justify-center group-hover:bg-brand group-hover:border-brand transition-all duration-300 shrink-0 ml-auto md:ml-0">
+                  <div className="w-10 h-10 rounded-full border border-foreground/20 flex items-center justify-center group-hover:bg-brand group-hover:border-brand transition-all duration-300 shrink-0 self-start md:self-auto mt-1 md:mt-0">
                     <ArrowUpRight
                       size={18}
                       className="text-foreground group-hover:text-white transition-colors duration-300"

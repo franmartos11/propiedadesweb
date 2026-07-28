@@ -30,9 +30,9 @@ export function NumbersSection() {
         </Reveal>
 
         {/* Lado derecho: texto + stats */}
-        <div className="flex flex-col justify-center px-8 md:px-16 xl:px-24 py-20 bg-white">
+        <div className="flex flex-col justify-center px-6 sm:px-10 md:px-16 xl:px-24 py-16 md:py-20 bg-white">
           <Reveal delay={0.15}>
-            <h2 className="font-serif text-4xl md:text-5xl xl:text-6xl text-foreground leading-[1.1] tracking-tight mb-6">
+            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl xl:text-6xl text-foreground leading-[1.1] tracking-tight mb-6">
               Construimos relaciones<br />
               basadas en <span className="italic text-brand">confianza<br />y resultados</span>
             </h2>
@@ -42,10 +42,10 @@ export function NumbersSection() {
           </Reveal>
 
           {/* Stats en fila horizontal con divisores */}
-          <div className="grid grid-cols-3 divide-x divide-border border-t border-border pt-10">
+          <div className="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-border border-t border-border pt-10">
             {stats.map((stat, i) => (
               <Reveal key={i} delay={0.3 + i * 0.12}>
-                <div className="flex flex-col items-start px-0 first:pl-0 pl-6 pr-6">
+                <div className="flex flex-col items-start px-0 sm:first:pl-0 sm:pl-6 sm:pr-6 py-6 sm:py-0">
                   <div className="font-serif text-4xl md:text-5xl xl:text-6xl text-foreground leading-none mb-2 flex items-end gap-0.5">
                     <AnimatedNumber value={stat.value} className="text-foreground" />
                     <span className="text-brand text-3xl md:text-4xl mb-1">{stat.suffix}</span>

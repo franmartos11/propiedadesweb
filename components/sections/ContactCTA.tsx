@@ -40,7 +40,7 @@ export function ContactCTA() {
   };
 
   return (
-    <section className="py-24 md:py-32 bg-background border-t border-border">
+    <section className="py-16 md:py-32 bg-background border-t border-border">
       <div className="container mx-auto px-6 md:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
 

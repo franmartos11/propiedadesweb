@@ -15,7 +15,7 @@ export function AdminServicesSection() {
           {/* Texto (60%) */}
           <div className="lg:col-span-7 pr-0 lg:pr-12">
             <Reveal direction="right">
-              <h2 className="font-serif text-5xl md:text-6xl lg:text-7xl text-foreground leading-[1.1] mb-8">
+              <h2 className="font-serif text-4xl md:text-6xl lg:text-7xl text-foreground leading-[1.1] mb-6 md:mb-8">
                 Tu propiedad trabaja.<br />
                 <span className="italic text-brand">Tú descansas.</span>
               </h2>
@@ -25,7 +25,7 @@ export function AdminServicesSection() {
                 Nos encargamos del ciclo completo de vida de tu inversión inmobiliaria, asegurando rentabilidad y tranquilidad.
               </p>
 
-              <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 mb-16">
+              <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 mb-10 md:mb-16">
                 {[
                   'Cobro y gestión mensual de alquilers',
                   'Mantenimiento y coordinación de reparaciones',

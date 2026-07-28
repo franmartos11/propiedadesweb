@@ -63,8 +63,9 @@ export function PropertyGallery({ images, propertySlug = 'unknown', tour360Urls 
             className="object-cover group-hover:brightness-95 transition-all"
             priority
           />
+          <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/40 to-transparent pointer-events-none md:hidden" />
           {tour360Urls && tour360Urls.length > 0 && (
-            <div className="absolute bottom-6 left-6 z-10 pointer-events-auto">
+            <div className="absolute bottom-4 left-4 md:bottom-6 md:left-6 z-10 pointer-events-auto">
               <VirtualTourModal tourUrls={tour360Urls} />
             </div>
           )}
@@ -98,7 +99,7 @@ export function PropertyGallery({ images, propertySlug = 'unknown', tour360Urls 
         {/* Botón Ver todas las fotos */}
         <button 
           onClick={() => openGallery(0)}
-          className="absolute bottom-6 right-6 bg-white border border-border px-4 py-2 rounded-lg font-sans text-sm font-semibold shadow-sm hover:bg-gray-50 flex items-center gap-2 z-10"
+          className="absolute bottom-4 right-4 md:bottom-6 md:right-6 bg-white border border-border px-4 py-2 rounded-lg font-sans text-sm font-semibold shadow-sm hover:bg-gray-50 flex items-center gap-2 z-10"
         >
           Ver todas las fotos
         </button>

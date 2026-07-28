@@ -255,7 +255,7 @@ export function PropertyGrid({
                 <button
                   key={i}
                   onClick={() => handlePageChange(i + 1)}
-                  className={`w-8 h-8 flex items-center justify-center text-sm font-sans transition-all ${
+                  className={`w-10 h-10 md:w-8 md:h-8 flex items-center justify-center text-sm font-sans transition-all ${
                     currentPage === i + 1
                       ? 'bg-brand text-white font-medium'
                       : 'bg-surface hover:bg-border text-foreground'

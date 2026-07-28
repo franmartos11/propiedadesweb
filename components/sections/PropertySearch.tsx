@@ -91,7 +91,7 @@ export function PropertySearch() {
               </div>
 
               {/* Localidad */}
-              <div className="relative group bg-white md:bg-transparent rounded-xl md:rounded-none border-t border-black/5 md:border-none">
+              <div className="relative group bg-white md:bg-transparent rounded-xl md:rounded-none border-t border-border md:border-none">
                 <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none text-brand">
                   <Map size={18} strokeWidth={1.5} />
                 </div>
@@ -110,7 +110,7 @@ export function PropertySearch() {
               </div>
 
               {/* Barrio */}
-              <div className="relative group bg-white md:bg-transparent rounded-xl md:rounded-none border-t border-black/5 md:border-none">
+              <div className="relative group bg-white md:bg-transparent rounded-xl md:rounded-none border-t border-border md:border-none">
                 <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none text-brand">
                   <MapPin size={18} strokeWidth={1.5} />
                 </div>
