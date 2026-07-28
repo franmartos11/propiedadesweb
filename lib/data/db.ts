@@ -86,11 +86,16 @@ export const getProperties = unstable_cache(
     }
 
     // If table is empty, we return static as fallback during the migration phase
-    if (!data || data.length === 0) {
-      return staticProperties as Property[];
+    let results = data as Property[];
+    if (!results || results.length === 0) {
+      results = staticProperties as Property[];
     }
 
-    return data as Property[];
+    // Agregar vista 360 de prueba en todas las propiedades
+    return results.map(p => ({
+      ...p,
+      tour360Urls: ['/bg-4.jpg']
+    }));
   },
   ['properties-all'],
   { tags: ['properties'], revalidate: 3600 }
@@ -165,9 +170,13 @@ export const getPropertyById = unstable_cache(
 
     if (error || !data) {
       // Fallback to static just in case
-      return (staticProperties as Property[]).find((p) => p.id === id) ?? null;
+      const staticProp = (staticProperties as Property[]).find((p) => p.id === id) ?? null;
+      if (staticProp) {
+        return { ...staticProp, tour360Urls: ['/bg-4.jpg'] };
+      }
+      return null;
     }
-    return data as Property;
+    return { ...(data as Property), tour360Urls: ['/bg-4.jpg'] };
   },
   ['property-by-id'],
   { tags: ['properties'], revalidate: 3600 }
