@@ -95,7 +95,7 @@ export function VirtualTourModal({ tourUrls }: VirtualTourModalProps) {
             {/* ── Carrusel de Miniaturas ── */}
             {scenes.length > 1 && (
               <div className="absolute bottom-0 left-0 right-0 z-20 bg-gradient-to-t from-black/90 to-transparent pt-16 pb-5 px-4">
-                <div className="flex gap-3 overflow-x-auto justify-center items-end [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+                <div className="flex gap-3 overflow-x-auto justify-center items-start [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
                   {scenes.map((scene, idx) => (
                     <button
                       key={idx}
