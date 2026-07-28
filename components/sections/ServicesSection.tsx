@@ -167,6 +167,15 @@ export function ServicesSection() {
           {/* Panel */}
           <div className="relative z-10 w-full md:max-w-4xl bg-white shadow-2xl md:rounded-2xl overflow-hidden flex flex-col md:flex-row max-h-[92vh] md:max-h-[85vh] animate-[slideUp_0.4s_cubic-bezier(0.16,1,0.3,1)]">
 
+            {/* Cerrar flotante para que siempre esté visible */}
+            <button
+              onClick={() => setActiveService(null)}
+              className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-white/90 backdrop-blur-md flex items-center justify-center hover:bg-white transition-colors shadow-md"
+              aria-label="Cerrar"
+            >
+              <X size={20} className="text-foreground" />
+            </button>
+
             {/* Imagen */}
             <div className="relative w-full md:w-[42%] h-52 md:h-auto shrink-0">
               <Image
@@ -184,16 +193,7 @@ export function ServicesSection() {
             </div>
 
             {/* Contenido */}
-            <div className="flex flex-col overflow-y-auto px-7 py-7 md:px-10 md:py-10 flex-1">
-              {/* Cerrar */}
-              <button
-                onClick={() => setActiveService(null)}
-                className="self-end w-9 h-9 rounded-full bg-surface flex items-center justify-center hover:bg-foreground/10 transition-colors mb-4 shrink-0"
-                aria-label="Cerrar"
-              >
-                <X size={16} className="text-foreground" />
-              </button>
-
+            <div className="flex flex-col overflow-y-auto px-7 py-10 md:px-10 md:py-10 flex-1">
               <h2 className="font-serif text-3xl md:text-4xl text-foreground leading-tight mb-2">
                 {activeService.title}
               </h2>
