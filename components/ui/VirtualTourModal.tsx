@@ -117,7 +117,7 @@ export function VirtualTourModal({ tourUrls }: VirtualTourModalProps) {
                           <View size={18} className="text-white/70" />
                         </div>
                       </div>
-                      <span className="text-white/70 font-sans text-[10px] tracking-widest uppercase max-w-[80px] truncate">
+                      <span className="text-white/70 font-sans text-[10px] tracking-widest uppercase text-center line-clamp-2 w-[90px] leading-tight mt-1">
                         {scene.name}
                       </span>
                     </button>
