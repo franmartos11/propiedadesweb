@@ -266,10 +266,12 @@ export function SearchLayout({ initialProperties, title, from }: SearchLayoutPro
 
         {/* Sidebar Filters */}
         <aside className={`
-          fixed inset-y-0 left-0 z-50 w-full max-w-sm bg-white overflow-y-auto transform transition-transform duration-300 md:static md:w-[260px] md:transform-none md:shrink-0 md:bg-transparent md:z-auto
+          fixed inset-y-0 left-0 z-50 w-full max-w-sm bg-white overflow-y-auto transform transition-transform duration-300 
+          md:sticky md:top-[160px] md:self-start md:h-[calc(100vh-180px)] md:w-[260px] md:transform-none md:shrink-0 md:bg-transparent md:z-auto
           ${showFiltersMobile ? 'translate-x-0 shadow-2xl' : '-translate-x-full md:translate-x-0'}
+          [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]
         `}>
-          <div className="sticky top-0 md:top-36 flex flex-col gap-5 md:bg-white md:border md:border-border rounded-none md:rounded-xl p-5 md:shadow-sm">
+          <div className="flex flex-col gap-5 md:bg-white md:border md:border-border rounded-none md:rounded-xl p-5 md:shadow-sm">
             <div className="flex items-center justify-between">
               <p className="font-sans font-bold text-sm uppercase tracking-widest text-foreground">Filtrar</p>
               <button 
@@ -419,6 +421,7 @@ export function SearchLayout({ initialProperties, title, from }: SearchLayoutPro
                   showFilters={false}
                   title=""
                   compact={viewMode === 'split'}
+                  disablePagination={true}
                 />
               ) : (
                 <div className="flex flex-col items-center justify-center py-24 text-center">

@@ -134,6 +134,7 @@ interface PropertyGridProps {
   hoveredPropertyId?: string | null;
   from?: string;
   compact?: boolean;
+  disablePagination?: boolean;
 }
 
 type FilterType = 'Todos' | 'Venta' | 'Alquiler';
@@ -147,6 +148,7 @@ export function PropertyGrid({
   hoveredPropertyId,
   from,
   compact = false,
+  disablePagination = false,
 }: PropertyGridProps) {
   const [activeFilter, setActiveFilter] = React.useState<FilterType>('Todos');
   const [currentPage, setCurrentPage] = React.useState(1);
@@ -175,9 +177,10 @@ export function PropertyGrid({
   const totalPages = Math.ceil(filtered.length / itemsPerPage);
   
   const currentProperties = React.useMemo(() => {
+    if (disablePagination) return filtered;
     const start = (currentPage - 1) * itemsPerPage;
     return filtered.slice(start, start + itemsPerPage);
-  }, [filtered, currentPage, itemsPerPage]);
+  }, [filtered, currentPage, itemsPerPage, disablePagination]);
 
   return (
     <section ref={sectionRef} className={`${title || showFilters ? 'pt-4 md:pt-8' : 'pt-0'} pb-16 md:pb-24 bg-background`}>
@@ -241,7 +244,7 @@ export function PropertyGrid({
         )}
 
         {/* Pagination Controls */}
-        {totalPages > 1 && (
+        {!disablePagination && totalPages > 1 && (
           <div className="mt-12 flex justify-center items-center gap-2">
             <button
               onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
