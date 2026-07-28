@@ -19,6 +19,9 @@ interface Props {
   searchParams?: Promise<{ from?: string }>;
 }
 
+export const revalidate = 60; // ISR cache por 60 segundos
+export const dynamicParams = true;
+
 export async function generateStaticParams() {
   const properties = await getProperties();
   return properties.map((p) => ({ slug: p.slug }));

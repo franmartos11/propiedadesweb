@@ -2,6 +2,7 @@ import 'server-only';
 import { createServerSupabaseClient } from '@/lib/supabase/server';
 import type { Property } from '@/lib/data/properties';
 import { properties as staticProperties } from '@/lib/data/properties';
+import { unstable_cache, revalidateTag } from 'next/cache';
 
 export type LeadStatus = 'Nuevo' | 'Contactado' | 'En seguimiento' | 'Cerrado';
 
@@ -71,25 +72,29 @@ export async function updateLead(id: string, updates: Partial<Lead>): Promise<Le
 
 // ─── Properties ───────────────────────────────────────────────────────────────
 
-export async function getProperties(): Promise<Property[]> {
-  const supabase = createServerSupabaseClient();
-  const { data, error } = await supabase
-    .from('properties')
-    .select('*')
-    .order('updatedAt', { ascending: false });
+export const getProperties = unstable_cache(
+  async (): Promise<Property[]> => {
+    const supabase = createServerSupabaseClient();
+    const { data, error } = await supabase
+      .from('properties')
+      .select('*')
+      .order('updatedAt', { ascending: false });
 
-  if (error) {
-    console.warn('Warning: Could not fetch properties from Supabase, falling back to static data.', error);
-    return staticProperties as Property[]; // Fallback for local testing if table is empty
-  }
+    if (error) {
+      console.warn('Warning: Could not fetch properties from Supabase, falling back to static data.', error);
+      return staticProperties as Property[]; // Fallback for local testing if table is empty
+    }
 
-  // If table is empty, we return static as fallback during the migration phase
-  if (!data || data.length === 0) {
-    return staticProperties as Property[];
-  }
+    // If table is empty, we return static as fallback during the migration phase
+    if (!data || data.length === 0) {
+      return staticProperties as Property[];
+    }
 
-  return data as Property[];
-}
+    return data as Property[];
+  },
+  ['properties-all'],
+  { tags: ['properties'], revalidate: 3600 }
+);
 
 export async function createProperty(data: Omit<Property, 'id' | 'slug' | 'updatedAt'>): Promise<Property> {
   const supabase = createServerSupabaseClient();
@@ -108,6 +113,8 @@ export async function createProperty(data: Omit<Property, 'id' | 'slug' | 'updat
     throw new Error('No se pudo crear la propiedad');
   }
 
+  revalidateTag('properties', 'max');
+  revalidateTag(`property-${id}`, 'max');
   return newProp;
 }
 
@@ -124,6 +131,9 @@ export async function updateProperty(id: string, data: Partial<Property>): Promi
     console.error('Error updating property:', error);
     return null;
   }
+  
+  revalidateTag('properties', 'max');
+  revalidateTag(`property-${id}`, 'max');
   return updated as Property;
 }
 
@@ -138,20 +148,27 @@ export async function deleteProperty(id: string): Promise<boolean> {
     console.error('Error deleting property:', error);
     return false;
   }
+  
+  revalidateTag('properties', 'max');
+  revalidateTag(`property-${id}`, 'max');
   return true;
 }
 
-export async function getPropertyById(id: string): Promise<Property | null> {
-  const supabase = createServerSupabaseClient();
-  const { data, error } = await supabase
-    .from('properties')
-    .select('*')
-    .eq('id', id)
-    .single();
+export const getPropertyById = unstable_cache(
+  async (id: string): Promise<Property | null> => {
+    const supabase = createServerSupabaseClient();
+    const { data, error } = await supabase
+      .from('properties')
+      .select('*')
+      .eq('id', id)
+      .single();
 
-  if (error || !data) {
-    // Fallback to static just in case
-    return (staticProperties as Property[]).find((p) => p.id === id) ?? null;
-  }
-  return data as Property;
-}
+    if (error || !data) {
+      // Fallback to static just in case
+      return (staticProperties as Property[]).find((p) => p.id === id) ?? null;
+    }
+    return data as Property;
+  },
+  ['property-by-id'],
+  { tags: ['properties'], revalidate: 3600 }
+);

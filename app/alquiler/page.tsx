@@ -10,6 +10,8 @@ export const metadata: Metadata = {
   description: 'Propiedades en alquiler en Córdoba. Residencial y comercial.',
 };
 
+export const revalidate = 60;
+
 export default async function AlquilerPage() {
   const properties = await getProperties();
   const alquilerProperties = properties.filter(p => p.tipo === 'Arriendo');

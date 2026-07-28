@@ -10,6 +10,8 @@ export const metadata: Metadata = {
   description: 'Catálogo de propiedades exclusivas en venta en Córdoba y alrededores.',
 };
 
+export const revalidate = 60;
+
 export default async function VentaPage() {
   const properties = await getProperties();
   const ventaProperties = properties.filter(p => p.tipo === 'Venta');
