@@ -5,12 +5,15 @@ import * as React from 'react';
 interface PropertyMapProps {
   barrio: string;
   comuna: string;
+  lat?: number;
+  lng?: number;
 }
 
-export function PropertyMap({ barrio, comuna }: PropertyMapProps) {
-  // Construir la consulta de búsqueda para el iframe
-  // Agregamos "Córdoba, Argentina" para mejorar la precisión de la búsqueda
-  const searchQuery = encodeURIComponent(`${barrio}, ${comuna}, Córdoba, Argentina`);
+export function PropertyMap({ barrio, comuna, lat, lng }: PropertyMapProps) {
+  // Si tenemos coordenadas, las usamos, sino buscamos por barrio
+  const query = (lat && lng && lat !== 0 && lng !== 0) 
+    ? `${lat},${lng}`
+    : encodeURIComponent(`${barrio}, ${comuna}, Córdoba, Argentina`);
   
   return (
     <div className="w-full">
@@ -22,7 +25,7 @@ export function PropertyMap({ barrio, comuna }: PropertyMapProps) {
       <div className="relative w-full aspect-[16/9] md:aspect-[21/9] bg-border overflow-hidden rounded-2xl">
         <iframe
           title={`Mapa de ubicación en ${barrio}, ${comuna}`}
-          src={`https://maps.google.com/maps?q=${searchQuery}&t=&z=14&ie=UTF8&iwloc=&output=embed`}
+          src={`https://maps.google.com/maps?q=${query}&t=&z=14&ie=UTF8&iwloc=&output=embed`}
           width="100%"
           height="100%"
           style={{ border: 0 }}

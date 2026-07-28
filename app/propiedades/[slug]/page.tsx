@@ -168,7 +168,7 @@ export default async function PropertyPage({ params, searchParams }: Props) {
 
               {/* Map */}
               <div className="pt-8 border-t border-border">
-                <PropertyMap barrio={property.barrio} comuna={property.comuna} />
+                <PropertyMap barrio={property.barrio} comuna={property.comuna} lat={property.lat} lng={property.lng} />
               </div>
 
               {/* Related */}
