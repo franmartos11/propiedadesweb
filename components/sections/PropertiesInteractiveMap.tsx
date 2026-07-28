@@ -8,7 +8,7 @@ import { MapContainer, TileLayer, Marker, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import Image from 'next/image';
-import { Bed, Maximize2 } from 'lucide-react';
+import { Bed, Bath, Maximize2 } from 'lucide-react';
 
 interface Props {
   properties: Property[];

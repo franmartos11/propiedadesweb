@@ -1,12 +1,13 @@
 import * as React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { Reveal } from '../ui/Reveal';
 
 const services = [
   {
     id: 'venta',
+    number: '01',
     title: 'Venta de Inmuebles',
     description: 'Tasación profesional y comercialización. Te acompañamos en cada paso hasta el cierre con la mayor seguridad jurídica.',
     image: '/bg-1.jpg',
@@ -14,6 +15,7 @@ const services = [
   },
   {
     id: 'alquiler',
+    number: '02',
     title: 'Alquileres Exclusivos',
     description: 'Encontrá tu próximo hogar o local. Seleccionamos rigurosamente arrendatarios con garantías sólidas para tu tranquilidad.',
     image: '/bg-4.jpg',
@@ -21,6 +23,7 @@ const services = [
   },
   {
     id: 'administracion',
+    number: '03',
     title: 'Administración de Propiedades',
     description: 'Nos ocupamos de tu inversión: cobros, rendición mensual, mantenimiento y gestión integral de inquilinos.',
     image: '/bg-2.jpg',
@@ -30,61 +33,57 @@ const services = [
 
 export function ServicesSection() {
   return (
-    <section className="py-24 md:py-32 bg-white">
+    <section className="py-24 md:py-32 bg-[#f5f3ef]">
       <div className="container mx-auto px-6 md:px-12 max-w-screen-xl">
 
+        {/* Header */}
         <Reveal>
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-6">
-            <div className="max-w-2xl">
-
-              <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl text-foreground leading-tight tracking-tight">
-                El estándar de <span className="italic text-brand">excelencia</span> <br className="hidden md:block"/> en servicios inmobiliarios
-              </h2>
-            </div>
-            <p className="font-sans text-gray max-w-sm text-sm md:text-base leading-relaxed md:pb-3">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16 md:mb-20 pb-8 border-b border-foreground/15">
+            <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl text-foreground leading-tight tracking-tight max-w-xl">
+              El estándar de <span className="italic text-brand">excelencia</span>{' '}
+              en servicios inmobiliarios
+            </h2>
+            <p className="font-sans text-gray max-w-xs text-sm leading-relaxed md:pb-1 shrink-0">
               Más de 15 años acompañando a familias y empresas a tomar las decisiones más importantes para su futuro.
             </p>
           </div>
         </Reveal>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
+        {/* Services List — editorial style */}
+        <div className="flex flex-col divide-y divide-foreground/10">
           {services.map((service, i) => (
-            <Reveal key={service.id} delay={i * 0.15}>
+            <Reveal key={service.id} delay={i * 0.12}>
               <Link
                 href={service.href}
-                className="group relative block w-full h-[500px] overflow-hidden bg-foreground rounded-2xl"
+                className="group grid grid-cols-1 md:grid-cols-[80px_1fr_280px_48px] gap-4 md:gap-8 items-center py-8 md:py-10 hover:bg-white/60 transition-colors duration-300 px-2 md:px-4 -mx-2 md:-mx-4 rounded-xl"
               >
-                {/* Background Image */}
-                <Image
-                  src={service.image}
-                  alt={service.title}
-                  fill
-                  className="object-cover transition-transform duration-1000 group-hover:scale-105 opacity-80 group-hover:opacity-60"
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                />
-                
-                {/* Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80" />
+                {/* Número */}
+                <span className="font-sans text-xs text-gray/60 tracking-[0.2em] hidden md:block">
+                  {service.number}
+                </span>
 
-                {/* Content */}
-                <div className="absolute inset-0 p-8 md:p-10 flex flex-col justify-end">
-                  <h3 className="font-serif text-3xl md:text-4xl text-white mb-4 translate-y-8 group-hover:translate-y-0 transition-transform duration-500 ease-out">
-                    {service.title}
-                  </h3>
-                  
-                  <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
-                    <p className="font-sans text-white/80 text-sm md:text-base leading-relaxed mb-6">
-                      {service.description}
-                    </p>
-                    <div className="inline-flex items-center gap-2 text-brand font-sans text-xs uppercase tracking-[0.2em] font-medium">
-                      Descubrir más <ArrowRight size={16} />
-                    </div>
-                  </div>
+                {/* Título */}
+                <h3 className="font-serif text-2xl md:text-3xl text-foreground group-hover:text-brand transition-colors duration-300">
+                  {service.title}
+                </h3>
+
+                {/* Descripción */}
+                <p className="font-sans text-gray text-sm leading-relaxed">
+                  {service.description}
+                </p>
+
+                {/* Flecha */}
+                <div className="w-10 h-10 rounded-full border border-foreground/20 flex items-center justify-center group-hover:bg-brand group-hover:border-brand transition-all duration-300 shrink-0 ml-auto md:ml-0">
+                  <ArrowUpRight
+                    size={18}
+                    className="text-foreground group-hover:text-white transition-colors duration-300"
+                  />
                 </div>
               </Link>
             </Reveal>
           ))}
         </div>
+
       </div>
     </section>
   );
