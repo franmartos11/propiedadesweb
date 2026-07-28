@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 import { Reveal } from '../ui/Reveal';
 import { useAnalytics } from '@/lib/hooks/useAnalytics';
 import { properties } from '@/lib/data/properties';
@@ -73,32 +74,31 @@ export function InstagramSection() {
         {/* Mosaic grid */}
         <div className="grid grid-cols-3 md:grid-cols-[2fr_1.5fr_1.5fr] grid-rows-2 gap-2 md:gap-3 h-[420px] md:h-[520px]">
           {feedImages.slice(0, 5).map((src, idx) => (
-            <Reveal
+            <motion.a
               key={idx}
-              delay={idx * 0.08}
-              className={idx === 0 ? 'row-span-2' : ''}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.6, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
+              href="https://www.instagram.com/villalba.martinez.inmobiliaria/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`group relative block w-full h-full overflow-hidden bg-surface ${idx === 0 ? 'row-span-2' : ''}`}
             >
-              <a
-                href="https://www.instagram.com/villalba.martinez.inmobiliaria/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group relative block w-full h-full overflow-hidden bg-surface"
-              >
-                <Image
-                  src={src}
-                  alt={`Villalba Martinez en Instagram – foto ${idx + 1}`}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-105 brightness-[0.97]"
-                  sizes="(max-width: 768px) 50vw, 33vw"
-                />
-                {/* Hover overlay */}
-                <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/30 transition-all duration-400 flex items-center justify-center">
-                  <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/90 rounded-full p-3">
-                    <InstagramIcon size={20} className="text-foreground" />
-                  </div>
+              <Image
+                src={src}
+                alt={`Villalba Martinez en Instagram – foto ${idx + 1}`}
+                fill
+                className="object-cover transition-transform duration-700 group-hover:scale-105 brightness-[0.97]"
+                sizes="(max-width: 768px) 50vw, 33vw"
+              />
+              {/* Hover overlay */}
+              <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/30 transition-all duration-400 flex items-center justify-center">
+                <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/90 rounded-full p-3">
+                  <InstagramIcon size={20} className="text-foreground" />
                 </div>
-              </a>
-            </Reveal>
+              </div>
+            </motion.a>
           ))}
         </div>
 
