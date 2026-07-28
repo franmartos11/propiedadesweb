@@ -19,7 +19,7 @@ export interface Property {
   lng: number;
   descripcion: string;
   imagenes: string[];
-  tour360Urls?: string[];
+  tour360Urls?: (string | { url: string; name: string })[];
   destacada: boolean;
   updatedAt: string;
 }

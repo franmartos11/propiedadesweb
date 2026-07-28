@@ -91,10 +91,16 @@ export const getProperties = unstable_cache(
       results = staticProperties as Property[];
     }
 
-    // Agregar vista 360 de prueba en todas las propiedades (interior de una casa)
+    // Agregar vista 360 de prueba con múltiples habitaciones
+    const testTour = [
+      { url: 'https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/2294472375_24a3b8ef46_o.jpg', name: 'Living Comedor' },
+      { url: 'https://raw.githubusercontent.com/vthibault/rooster/master/assets/textures/equirectangular/equirectangular.jpg', name: 'Dormitorio' },
+      { url: 'https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/2294472375_24a3b8ef46_o.jpg', name: 'Cocina' }
+    ];
+
     return results.map(p => ({
       ...p,
-      tour360Urls: ['https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/2294472375_24a3b8ef46_o.jpg']
+      tour360Urls: testTour
     }));
   },
   ['properties-all-v2'],
@@ -168,15 +174,21 @@ export const getPropertyById = unstable_cache(
       .eq('id', id)
       .single();
 
+    const testTour = [
+      { url: 'https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/2294472375_24a3b8ef46_o.jpg', name: 'Living Comedor' },
+      { url: 'https://raw.githubusercontent.com/vthibault/rooster/master/assets/textures/equirectangular/equirectangular.jpg', name: 'Dormitorio' },
+      { url: 'https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/2294472375_24a3b8ef46_o.jpg', name: 'Cocina' }
+    ];
+
     if (error || !data) {
       // Fallback to static just in case
       const staticProp = (staticProperties as Property[]).find((p) => p.id === id) ?? null;
       if (staticProp) {
-        return { ...staticProp, tour360Urls: ['https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/2294472375_24a3b8ef46_o.jpg'] };
+        return { ...staticProp, tour360Urls: testTour };
       }
       return null;
     }
-    return { ...(data as Property), tour360Urls: ['https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/2294472375_24a3b8ef46_o.jpg'] };
+    return { ...(data as Property), tour360Urls: testTour };
   },
   ['property-by-id-v2'],
   { tags: ['properties'], revalidate: 3600 }

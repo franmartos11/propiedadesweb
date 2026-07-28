@@ -5,8 +5,10 @@ import { createPortal } from 'react-dom';
 import { VirtualTour360 } from './VirtualTour360';
 import { View, X } from 'lucide-react';
 
+export type TourScene = { url: string; name: string };
+
 interface VirtualTourModalProps {
-  tourUrls: string[];
+  tourUrls: (string | TourScene)[];
 }
 
 export function VirtualTourModal({ tourUrls }: VirtualTourModalProps) {
@@ -19,6 +21,9 @@ export function VirtualTourModal({ tourUrls }: VirtualTourModalProps) {
   }, []);
 
   if (!tourUrls || tourUrls.length === 0) return null;
+
+  const currentScene = tourUrls[currentIndex];
+  const currentUrl = typeof currentScene === 'string' ? currentScene : currentScene.url;
 
   return (
     <>
@@ -43,7 +48,9 @@ export function VirtualTourModal({ tourUrls }: VirtualTourModalProps) {
             {/* Header del Modal */}
             <div className="flex items-center justify-between p-4 bg-black/50 absolute top-0 left-0 right-0 z-10">
               <div className="flex gap-2">
-                {tourUrls.length > 1 && tourUrls.map((url, idx) => (
+                {tourUrls.length > 1 && tourUrls.map((item, idx) => {
+                  const name = typeof item === 'string' ? `Escena ${idx + 1}` : item.name;
+                  return (
                   <button
                     key={idx}
                     onClick={() => setCurrentIndex(idx)}
@@ -51,9 +58,10 @@ export function VirtualTourModal({ tourUrls }: VirtualTourModalProps) {
                       currentIndex === idx ? 'bg-[#C1121F] text-white' : 'bg-white/10 text-white/50 hover:bg-white/20 hover:text-white'
                     }`}
                   >
-                    Escena {idx + 1}
+                    {name}
                   </button>
-                ))}
+                  );
+                })}
               </div>
               <button 
                 onClick={() => setIsOpen(false)}
@@ -65,7 +73,7 @@ export function VirtualTourModal({ tourUrls }: VirtualTourModalProps) {
 
             {/* Visor 3D */}
             <div className="flex-1 w-full relative">
-              <VirtualTour360 imageUrl={tourUrls[currentIndex]} />
+              <VirtualTour360 imageUrl={currentUrl} />
             </div>
 
           </div>

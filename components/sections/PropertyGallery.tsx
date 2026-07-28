@@ -9,7 +9,7 @@ import { VirtualTourModal } from '@/components/ui/VirtualTourModal';
 interface PropertyGalleryProps {
   images: string[];
   propertySlug?: string;
-  tour360Urls?: string[];
+  tour360Urls?: (string | { url: string; name: string })[];
 }
 
 export function PropertyGallery({ images, propertySlug = 'unknown', tour360Urls }: PropertyGalleryProps) {
